@@ -1,0 +1,27 @@
+#Non-code folders in root
+.metadata
+APKs/
+Graphics/
+Keystore/
+
+#In SimplyToneGenerator folder
+SimplyToneGenerator/bin/
+SimplyToneGenerator/gen/
+SimplyToneGenerator/build//
+SimplyToneGenerator/proguard/
+SimplyToneGenerator/.gradle/
+SimplyToneGenerator/*.apk
+SimplyToneGenerator/*.ap_
+SimplyToneGenerator/*.class
+SimplyToneGenerator/*.dex
+SimplyToneGenerator/*.log
+SimplyToneGenerator/local.properties
+
+
+# Others, possibly not there.
+#tmp/
+#*.tmp
+#*.bak
+#*.swp
+#*~.nib
+#.loadpath

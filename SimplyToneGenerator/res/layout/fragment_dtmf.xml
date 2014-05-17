@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true" >
+
+    <!-- style="?android:buttonBarStyle" -->
+    <!-- style="?android:borderlessButtonStyle" -->
+
+
+    <!-- android:digits="0123456789ABCD*#" -->
+
+    <EditText
+        android:id="@+id/editTextRecord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:enabled="false"
+        android:maxLines="1"
+        android:textSize="@dimen/dtmfRecordButtonTextSize"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/buttonRecord1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:maxLines="2"
+            android:textSize="@dimen/dtmfRecordButtonTextSize"
+            android:text="Record 1" />
+
+        <Button
+            android:id="@+id/buttonRecord2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:maxLines="2"
+            android:textSize="@dimen/dtmfRecordButtonTextSize"
+            android:text="Record 2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/buttonRecord3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:maxLines="2"
+            android:textSize="@dimen/dtmfRecordButtonTextSize"
+            android:text="Record 3" />
+
+        <Button
+            android:id="@+id/buttonRecord4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:maxLines="2"
+            android:textSize="@dimen/dtmfRecordButtonTextSize"
+            android:text="Record 4" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/button1"
+            style="@style/styleButtonDtmfTone"
+            android:text="1" />
+
+        <Button
+            android:id="@+id/button2"
+            style="@style/styleButtonDtmfTone"
+            android:text="2" />
+
+        <Button
+            android:id="@+id/button3"
+            style="@style/styleButtonDtmfTone"
+            android:text="3" />
+
+        <Button
+            android:id="@+id/buttonA"
+            style="@style/styleButtonDtmfTone"
+            android:text="A" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/button4"
+            style="@style/styleButtonDtmfTone"
+            android:text="4" />
+
+        <Button
+            android:id="@+id/button5"
+            style="@style/styleButtonDtmfTone"
+            android:text="5" />
+
+        <Button
+            android:id="@+id/button6"
+            style="@style/styleButtonDtmfTone"
+            android:text="6" />
+
+        <Button
+            android:id="@+id/buttonB"
+            style="@style/styleButtonDtmfTone"
+            android:text="B" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/button7"
+            style="@style/styleButtonDtmfTone"
+            android:text="7" />
+
+        <Button
+            android:id="@+id/button8"
+            style="@style/styleButtonDtmfTone"
+            android:text="8" />
+
+        <Button
+            android:id="@+id/button9"
+            style="@style/styleButtonDtmfTone"
+            android:text="9" />
+
+        <Button
+            android:id="@+id/buttonC"
+            style="@style/styleButtonDtmfTone"
+            android:text="C" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/buttonS"
+            style="@style/styleButtonDtmfTone"
+            android:text="*" />
+
+        <Button
+            android:id="@+id/button0"
+            style="@style/styleButtonDtmfTone"
+            android:text="0" />
+
+        <Button
+            android:id="@+id/buttonP"
+            style="@style/styleButtonDtmfTone"
+            android:text="#" />
+
+        <Button
+            android:id="@+id/buttonD"
+            style="@style/styleButtonDtmfTone"
+            android:text="D" />
+    </LinearLayout>
+
+</LinearLayout>
