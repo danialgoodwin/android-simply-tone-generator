@@ -1,10 +1,10 @@
 package net.simplyadvanced.simplytonegenerator;
 
 import net.simplyadvanced.simplytonegenerator.dtmf.DtmfUtils;
+import net.simplyadvanced.simplytonegenerator.ui.CustomToast;
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.PorterDuff; // Eclipse doesn't give this as an option
-import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -36,31 +36,18 @@ public class FragmentDtmf extends Fragment implements OnTouchListener {
 		}
 	}
 
-
-	private static ToneGenerator mToneGenerator;
-	private static ToneGenerator mToneGenerator0;
-	private static ToneGenerator mToneGenerator1;
-	private static ToneGenerator mToneGenerator2;
-	private static ToneGenerator mToneGenerator3;
-	private static ToneGenerator mToneGenerator4;
-	private static ToneGenerator mToneGenerator5;
-	private static ToneGenerator mToneGenerator6;
-	private static ToneGenerator mToneGenerator7;
-	private static ToneGenerator mToneGenerator8;
-	private static ToneGenerator mToneGenerator9;
-	private static ToneGenerator mToneGeneratorA;
-	private static ToneGenerator mToneGeneratorB;
-	private static ToneGenerator mToneGeneratorC;
-	private static ToneGenerator mToneGeneratorD;
-	private static ToneGenerator mToneGeneratorP;
-	private static ToneGenerator mToneGeneratorS;
-	
 	
 	/** The Activity Context for FragmentActivityMain. */
 	private static Activity mActivity;
 
     /** A singleton instance of HelperPrefs. */
 	private HelperPrefs mHelperPrefs;
+
+    /** A singleton instance of DtmfUtils. */
+	private DtmfUtils mDtmfUtils;
+
+    /** A singleton instance of UserPrefs. */
+	private UserPrefs mUserPrefs;
 	
 	/** The View representing what FragmentActivityMain is showing. */
 	private View mViewActivity;
@@ -105,31 +92,9 @@ public class FragmentDtmf extends Fragment implements OnTouchListener {
 //    	setHasOptionsMenu(true); // Uncomment this if this fragment has specific menu options.
 
     	mHelperPrefs = HelperPrefs.getInstance(mActivity);
-    	
-    	try {
-			mToneGenerator  = new ToneGenerator(AudioManager.STREAM_MUSIC, UserPrefs.getVolume());
-			mToneGenerator0 = new ToneGenerator(AudioManager.STREAM_MUSIC, UserPrefs.getVolume());
-			mToneGenerator1 = new ToneGenerator(AudioManager.STREAM_MUSIC, UserPrefs.getVolume());
-			mToneGenerator2 = new ToneGenerator(AudioManager.STREAM_MUSIC, UserPrefs.getVolume());
-			mToneGenerator3 = new ToneGenerator(AudioManager.STREAM_MUSIC, UserPrefs.getVolume());
-			mToneGenerator4 = new ToneGenerator(AudioManager.STREAM_MUSIC, UserPrefs.getVolume());
-			mToneGenerator5 = new ToneGenerator(AudioManager.STREAM_MUSIC, UserPrefs.getVolume());
-			mToneGenerator6 = new ToneGenerator(AudioManager.STREAM_MUSIC, UserPrefs.getVolume());
-			mToneGenerator7 = new ToneGenerator(AudioManager.STREAM_MUSIC, UserPrefs.getVolume());
-			mToneGenerator8 = new ToneGenerator(AudioManager.STREAM_MUSIC, UserPrefs.getVolume()); // TODO: Fix crash bug here! Too many new ToneGenerator.
-			mToneGenerator9 = new ToneGenerator(AudioManager.STREAM_MUSIC, UserPrefs.getVolume());
-			mToneGeneratorA = new ToneGenerator(AudioManager.STREAM_MUSIC, UserPrefs.getVolume());
-			mToneGeneratorB = new ToneGenerator(AudioManager.STREAM_MUSIC, UserPrefs.getVolume());
-			mToneGeneratorC = new ToneGenerator(AudioManager.STREAM_MUSIC, UserPrefs.getVolume());
-			mToneGeneratorD = new ToneGenerator(AudioManager.STREAM_MUSIC, UserPrefs.getVolume());
-			mToneGeneratorP = new ToneGenerator(AudioManager.STREAM_MUSIC, UserPrefs.getVolume());
-			mToneGeneratorS = new ToneGenerator(AudioManager.STREAM_MUSIC, UserPrefs.getVolume());
-    	} catch (Exception e) {
-    		if (HelperCommon.IS_DEBUG_MODE) {
-	    		log("ERROR: " + e.getMessage());
-	    		e.printStackTrace();
-    		}
-    	}
+
+    	mDtmfUtils = DtmfUtils.getInstance();
+    	mUserPrefs = UserPrefs.getInstance(mActivity);
 		
 		setupViews(); // First.
 		setupOnClickListeners(); // After setupViews();
@@ -161,18 +126,6 @@ public class FragmentDtmf extends Fragment implements OnTouchListener {
 		buttonD = (Button) mViewActivity.findViewById(R.id.buttonD);
 		buttonP = (Button) mViewActivity.findViewById(R.id.buttonP);
 		buttonS = (Button) mViewActivity.findViewById(R.id.buttonS);
-
-
-		button1.setText(setStyledText("1\n   ")); // So that the number lines up better with the others.
-		button2.setText(setStyledText("2\nABC"));
-		button3.setText(setStyledText("3\nDEF"));
-		button4.setText(setStyledText("4\nGHI"));
-		button5.setText(setStyledText("5\nJKL"));
-		button6.setText(setStyledText("6\nMNO"));
-		button7.setText(setStyledText("7\nPQRS"));
-		button8.setText(setStyledText("8\nTUV"));
-		button9.setText(setStyledText("9\nWXYZ"));
-		
 	}
 	
 	/** Returns the input with all but first two characters a little smaller. */
@@ -184,6 +137,29 @@ public class FragmentDtmf extends Fragment implements OnTouchListener {
 	}
 
 	private void setupOnClickListeners() {
+
+		if (mUserPrefs.isShowLettersUnderDtmfNumbers()) {
+			button1.setText(setStyledText("1\n   ")); // So that the number lines up better with the others.
+			button2.setText(setStyledText("2\nABC"));
+			button3.setText(setStyledText("3\nDEF"));
+			button4.setText(setStyledText("4\nGHI"));
+			button5.setText(setStyledText("5\nJKL"));
+			button6.setText(setStyledText("6\nMNO"));
+			button7.setText(setStyledText("7\nPQRS"));
+			button8.setText(setStyledText("8\nTUV"));
+			button9.setText(setStyledText("9\nWXYZ"));
+		} else {
+			button1.setText("1");
+			button2.setText("2");
+			button3.setText("3");
+			button4.setText("4");
+			button5.setText("5");
+			button6.setText("6");
+			button7.setText("7");
+			button8.setText("8");
+			button9.setText("9");
+		}
+		
 		buttonRecord1.setOnClickListener(new OnClickListener() { @Override public void onClick(View v) { pressButtonRecord1(); }});
 		buttonRecord2.setOnClickListener(new OnClickListener() { @Override public void onClick(View v) { pressButtonRecord2(); }});
 		buttonRecord3.setOnClickListener(new OnClickListener() { @Override public void onClick(View v) { pressButtonRecord3(); }});
@@ -274,13 +250,6 @@ public class FragmentDtmf extends Fragment implements OnTouchListener {
 	/*************/
 
 	@Override
-	public void onPause() {
-		log("onPause()");
-		
-		super.onPause();
-	}
-
-	@Override
 	public void onResume() {
 		log("onResume()");
 		setupOnClickListeners();
@@ -294,15 +263,8 @@ public class FragmentDtmf extends Fragment implements OnTouchListener {
 		buttonRecord2.setText(mHelperPrefs.getSharedPreference(TAG_PREF + PHRASE_RECORD_2, PHRASE_RECORD_2));
 		buttonRecord3.setText(mHelperPrefs.getSharedPreference(TAG_PREF + PHRASE_RECORD_3, PHRASE_RECORD_3));
 		buttonRecord4.setText(mHelperPrefs.getSharedPreference(TAG_PREF + PHRASE_RECORD_4, PHRASE_RECORD_4));
-
 		
 		super.onStart();
-	}
-
-	@Override
-	public void onStop() {
-		log("onStop()");
-		super.onStop();
 	}
 	
 	
@@ -368,7 +330,7 @@ public class FragmentDtmf extends Fragment implements OnTouchListener {
 	/*****************/
 
 	private void pressButtonDtmfTone(final int toneType) {
-		playSoundDtmf(toneType);
+		mDtmfUtils.playSoundDtmf(toneType);
 		
 		inputToneToEditText(toneType);
 //		if (editTextRecord.getVisibility() == View.VISIBLE) {
@@ -377,88 +339,60 @@ public class FragmentDtmf extends Fragment implements OnTouchListener {
 //			String newTone = getStringFromToneType(toneType);
 //			editTextRecord.setText(oldRecord + newTone);
 //		}
-		
 	}
 
-	private void playSoundDtmf(final int toneType) {
-		final int duration = 537; // milliseconds // -1 for infinite loop.
-		playSoundDtmf(toneType, duration);
-	}
-	
-	private void playSoundDtmf(final int toneType, final int duration) {
-		stopSoundDtmf();
-		mToneGenerator.startTone(toneType, duration);
-	}
-	
-	private void stopSoundDtmf() {
-		if (mToneGenerator != null) {
-			mToneGenerator.stopTone();	
-		}
-	}
-
-	// This is actually the original working version. I should use this if I can't get the more complicated example working.
-	private void playIndefiniteDtmfTone1(final View v) {
-		stopSoundDtmf();
-		mToneGenerator.startTone(getToneTypeFromView(v));
-	}
-	
-	private void playIndefiniteDtmfTone(final View v) {
-//		stopSoundDtmf();
-		if (v.equals(button0)) { mToneGenerator0.startTone(ToneGenerator.TONE_DTMF_0); }
-		else if (v.equals(button1)) { mToneGenerator1.startTone(ToneGenerator.TONE_DTMF_1); }
-		else if (v.equals(button2)) { mToneGenerator2.startTone(ToneGenerator.TONE_DTMF_2); }
-		else if (v.equals(button3)) { mToneGenerator3.startTone(ToneGenerator.TONE_DTMF_3); }
-		else if (v.equals(button4)) { mToneGenerator4.startTone(ToneGenerator.TONE_DTMF_4); }
-		else if (v.equals(button5)) { mToneGenerator5.startTone(ToneGenerator.TONE_DTMF_5); }
-		else if (v.equals(button6)) { mToneGenerator6.startTone(ToneGenerator.TONE_DTMF_6); }
-		else if (v.equals(button7)) { mToneGenerator7.startTone(ToneGenerator.TONE_DTMF_7); }
-		else if (v.equals(button8)) { mToneGenerator8.startTone(ToneGenerator.TONE_DTMF_8); }
-		else if (v.equals(button9)) { mToneGenerator9.startTone(ToneGenerator.TONE_DTMF_9); }
-		else if (v.equals(buttonA)) { mToneGeneratorA.startTone(ToneGenerator.TONE_DTMF_A); }
-		else if (v.equals(buttonB)) { mToneGeneratorB.startTone(ToneGenerator.TONE_DTMF_B); }
-		else if (v.equals(buttonC)) { mToneGeneratorC.startTone(ToneGenerator.TONE_DTMF_C); }
-		else if (v.equals(buttonD)) { mToneGeneratorD.startTone(ToneGenerator.TONE_DTMF_D); }
-		else if (v.equals(buttonP)) { mToneGeneratorP.startTone(ToneGenerator.TONE_DTMF_P); }
-		else if (v.equals(buttonS)) { mToneGeneratorS.startTone(ToneGenerator.TONE_DTMF_S); }
-	
-	}
-
-	// This is actually the original working version. I should use this if I can't get the more complicated example working.
-	private void stopIndefiniteDtmfToneNow1(final View v) {
-		if (mToneGenerator != null) {
-			mToneGenerator.stopTone();	
-		}
+	public void playIndefiniteDtmfTone(final View v) {
+		if      (v.equals(button0)) { mDtmfUtils.start0(); }
+		else if (v.equals(button1)) { mDtmfUtils.start1(); }
+		else if (v.equals(button2)) { mDtmfUtils.start2(); }
+		else if (v.equals(button3)) { mDtmfUtils.start3(); }
+		else if (v.equals(button4)) { mDtmfUtils.start4(); }
+		else if (v.equals(button5)) { mDtmfUtils.start5(); }
+		else if (v.equals(button6)) { mDtmfUtils.start6(); }
+		else if (v.equals(button7)) { mDtmfUtils.start7(); }
+		else if (v.equals(button8)) { mDtmfUtils.start8(); }
+		else if (v.equals(button9)) { mDtmfUtils.start9(); }
+		else if (v.equals(buttonA)) { mDtmfUtils.startA(); }
+		else if (v.equals(buttonB)) { mDtmfUtils.startB(); }
+		else if (v.equals(buttonC)) { mDtmfUtils.startC(); }
+		else if (v.equals(buttonD)) { mDtmfUtils.startD(); }
+		else if (v.equals(buttonP)) { mDtmfUtils.startP(); }
+		else if (v.equals(buttonS)) { mDtmfUtils.startS(); }
 	}
 	
 	private void stopIndefiniteDtmfToneNow(final View v) {
-		if (mToneGenerator != null) {
-			if (v.equals(button0)) { mToneGenerator0.stopTone(); }
-			else if (v.equals(button1)) { mToneGenerator1.stopTone(); }
-			else if (v.equals(button2)) { mToneGenerator2.stopTone(); }
-			else if (v.equals(button3)) { mToneGenerator3.stopTone(); }
-			else if (v.equals(button4)) { mToneGenerator4.stopTone(); }
-			else if (v.equals(button5)) { mToneGenerator5.stopTone(); }
-			else if (v.equals(button6)) { mToneGenerator6.stopTone(); }
-			else if (v.equals(button7)) { mToneGenerator7.stopTone(); }
-			else if (v.equals(button8)) { mToneGenerator8.stopTone(); }
-			else if (v.equals(button9)) { mToneGenerator9.stopTone(); }
-			else if (v.equals(buttonA)) { mToneGeneratorA.stopTone(); }
-			else if (v.equals(buttonB)) { mToneGeneratorB.stopTone(); }
-			else if (v.equals(buttonC)) { mToneGeneratorC.stopTone(); }
-			else if (v.equals(buttonD)) { mToneGeneratorD.stopTone(); }
-			else if (v.equals(buttonP)) { mToneGeneratorP.stopTone(); }
-			else if (v.equals(buttonS)) { mToneGeneratorS.stopTone(); }
-		}
+		if      (v.equals(button0)) { mDtmfUtils.stop0(); }
+		else if (v.equals(button1)) { mDtmfUtils.stop1(); }
+		else if (v.equals(button2)) { mDtmfUtils.stop2(); }
+		else if (v.equals(button3)) { mDtmfUtils.stop3(); }
+		else if (v.equals(button4)) { mDtmfUtils.stop4(); }
+		else if (v.equals(button5)) { mDtmfUtils.stop5(); }
+		else if (v.equals(button6)) { mDtmfUtils.stop6(); }
+		else if (v.equals(button7)) { mDtmfUtils.stop7(); }
+		else if (v.equals(button8)) { mDtmfUtils.stop8(); }
+		else if (v.equals(button9)) { mDtmfUtils.stop9(); }
+		else if (v.equals(buttonA)) { mDtmfUtils.stopA(); }
+		else if (v.equals(buttonB)) { mDtmfUtils.stopB(); }
+		else if (v.equals(buttonC)) { mDtmfUtils.stopC(); }
+		else if (v.equals(buttonD)) { mDtmfUtils.stopD(); }
+		else if (v.equals(buttonP)) { mDtmfUtils.stopP(); }
+		else if (v.equals(buttonS)) { mDtmfUtils.stopS(); }
 	}
-	
-	// Causes a "double-click" when combined with indefinite tone.
-//	private void stopIndefiniteDtmfToneSoon() {
-//		if (mToneGenerator != null) {
-//			playSoundDtmf(ToneGenerator.TONE_DTMF_0);
-//		}
-//	}
 
-	
+
+	// This is actually the original working version. I should use this if I can't get the more complicated example working.
+	@SuppressWarnings("unused")
+	private void playIndefiniteDtmfTone1(final View v) {
+		mDtmfUtils.stopSoundDtmf();
+		mDtmfUtils.playSoundDtmf(getToneTypeFromView(v));
+	}
+
+
+	// This is actually the original working version. I should use this if I can't get the more complicated example working.
+	@SuppressWarnings("unused")
+	private void stopIndefiniteDtmfToneNow1(final View v) {
+		mDtmfUtils.stopSoundDtmf();
+	}
 	
 	/*************/
 	/* Recording */
@@ -505,7 +439,7 @@ public class FragmentDtmf extends Fragment implements OnTouchListener {
 			buttonRecord.setText(PHRASE_SAVE);
 			editTextRecord.setText(PHRASE_);
 			editTextRecord.setVisibility(View.VISIBLE);
-			showToast(PHRASE_USE_TONES_FOR_INPUT);
+			CustomToast.show(mActivity, PHRASE_USE_TONES_FOR_INPUT);
 		} else if (s.equalsIgnoreCase(PHRASE_SAVE)) {
 			// Save whatever is in editTextRecord for playback later.
 			editTextRecord.setVisibility(View.GONE);
@@ -513,7 +447,7 @@ public class FragmentDtmf extends Fragment implements OnTouchListener {
 			if (recordText.equalsIgnoreCase(PHRASE_)) {
 				recordText = phraseRecord;
 			} else {
-				showToast(PHRASE_SAVED);
+				CustomToast.show(mActivity, PHRASE_SAVED);
 			}
 			buttonRecord.setText(recordText);
 			mHelperPrefs.saveSharedPreference(TAG_PREF + phraseRecord, recordText);
@@ -521,7 +455,10 @@ public class FragmentDtmf extends Fragment implements OnTouchListener {
 			buttonRecord.setText(phraseRecord);
 		} else { // If a record is already stored.
 			// Play record.
-			playDtmfString(s);
+			int timePerDigit = Integer.parseInt(mHelperPrefs.getUserPreference(getString(R.string.pref_time_for_tone), ActivityPreferences.TAG_DEFAULT_TIME_FOR_TONE));
+			int pause = Integer.parseInt(mHelperPrefs.getUserPreference(getString(R.string.pref_time_for_pause), ActivityPreferences.TAG_DEFAULT_TIME_FOR_PAUSE));
+			mDtmfUtils.playOrStopDtmfString(s, timePerDigit, pause);
+//			playDtmfString(s);
 		}
 	}
 	
@@ -558,7 +495,6 @@ public class FragmentDtmf extends Fragment implements OnTouchListener {
 	/********************/
 
 	/** When editTextRecord is showing, allow buttons to input characters there, so that records can be created and saved. */
-	
 	private void inputToneToEditText(final View v) {
 		inputToneToEditText(getToneTypeFromView(v));
 	}
@@ -569,62 +505,14 @@ public class FragmentDtmf extends Fragment implements OnTouchListener {
 		if (editTextRecord.getVisibility() == View.VISIBLE) {
 			// Insert characters into editTextRecord.
 			String oldRecord = editTextRecord.getText().toString();
-			String newTone = getStringFromToneType(toneType);
+			String newTone = DtmfUtils.getStringFromToneType(toneType);
 			editTextRecord.setText(oldRecord + newTone);
 		}
 	}
 	
 	
-	// TODO: Extract to DtmfUtils, put preferences in DtmfPrefs.
-	private void playDtmfString(final String tonePhrase) {
-		final int length = tonePhrase.length(); // Number of characters in String.
-		final int timePerDigit = Integer.parseInt(mHelperPrefs.getUserPreference(getString(R.string.pref_time_for_tone), ActivityPreferences.TAG_DEFAULT_TIME_FOR_TONE));
-		final int pause = Integer.parseInt(mHelperPrefs.getUserPreference(getString(R.string.pref_time_for_pause), ActivityPreferences.TAG_DEFAULT_TIME_FOR_PAUSE));
-		final int totalWaitTime = pause + timePerDigit;
-		
-	    new Thread(new Runnable() {
-	        public void run() {
-
-	    		for (int i = 0; i < length; i++) {
-	    			final int index = i;
-	    			
-					playSoundDtmf(DtmfUtils.getToneTypeFromString(PHRASE_ + tonePhrase.charAt(index)), timePerDigit);
-				    try {
-						Thread.sleep(totalWaitTime);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-	    		}
-	        }
-	    }).start();
-	    
-	}
-	
-	private String getStringFromToneType(final int toneType) {
-		switch(toneType) {
-		case ToneGenerator.TONE_DTMF_0: return "0";
-		case ToneGenerator.TONE_DTMF_1: return "1";
-		case ToneGenerator.TONE_DTMF_2: return "2";
-		case ToneGenerator.TONE_DTMF_3: return "3";
-		case ToneGenerator.TONE_DTMF_4: return "4";
-		case ToneGenerator.TONE_DTMF_5: return "5";
-		case ToneGenerator.TONE_DTMF_6: return "6";
-		case ToneGenerator.TONE_DTMF_7: return "7";
-		case ToneGenerator.TONE_DTMF_8: return "8";
-		case ToneGenerator.TONE_DTMF_9: return "9";
-		case ToneGenerator.TONE_DTMF_A: return "A";
-		case ToneGenerator.TONE_DTMF_B: return "B";
-		case ToneGenerator.TONE_DTMF_C: return "C";
-		case ToneGenerator.TONE_DTMF_D: return "D";
-		case ToneGenerator.TONE_DTMF_P: return "#";
-		case ToneGenerator.TONE_DTMF_S: return "*";
-		default: return "";
-		}
-	}
-	
-	
 	private int getToneTypeFromView(final View v) {
-		if (v.equals(button0)) { return ToneGenerator.TONE_DTMF_0; }
+		if      (v.equals(button0)) { return ToneGenerator.TONE_DTMF_0; }
 		else if (v.equals(button1)) { return ToneGenerator.TONE_DTMF_1; }
 		else if (v.equals(button2)) { return ToneGenerator.TONE_DTMF_2; }
 		else if (v.equals(button3)) { return ToneGenerator.TONE_DTMF_3; }
@@ -641,10 +529,6 @@ public class FragmentDtmf extends Fragment implements OnTouchListener {
 		else if (v.equals(buttonP)) { return ToneGenerator.TONE_DTMF_P; }
 		else if (v.equals(buttonS)) { return ToneGenerator.TONE_DTMF_S; }
 		return ToneGenerator.TONE_DTMF_0; // Error if code reaches here.
-	}
-	
-	private void showToast(final String message) {
-		Toast.makeText(mActivity, message, Toast.LENGTH_LONG).show();
 	}
 
 	

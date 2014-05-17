@@ -42,8 +42,10 @@ public class HelperCommon {
 			"" +
 			"Version 1.3\n" +
 			"=========\n" +
-			"1. [New Feature] Alpha characters on DTMF page.\n" +
-			"- Special thanks to Andrew R. for the suggestion!\n" +
+			"1. [New Feature] Alphabet on DTMF numbers.\n" +
+//			"   - Special thanks to Andrew R. for the feature suggestion!\n" +
+			"2. [New Feature] Settings option to hide those letters.\n" +
+			"3. [Change] DTMF playback now stops when pressed while playing. Please email me if you needed that old feature.\n" +
 			"\n" +
 			"\n" +
 			"Version 1.2\n" +

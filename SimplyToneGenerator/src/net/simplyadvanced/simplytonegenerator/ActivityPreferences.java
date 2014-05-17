@@ -36,14 +36,12 @@ public class ActivityPreferences extends PreferenceActivity implements OnSharedP
         mHelperPrefs = HelperPrefs.getInstance(this);
         
 		// Show the Up button in the action bar.
-		setupActionBar();
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		// Initializes summary
 //        int tempKey = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString(KEY_PREF_EDIT_WAIT_TIME, "1"));
 //        String summary = "" + pref_editWaitTimeText[tempKey] + " between cycles";
 //        findPreference(KEY_PREF_EDIT_WAIT_TIME).setSummary(summary);
-		
-		
 		
 		setupSummaries();
 	}
@@ -56,21 +54,8 @@ public class ActivityPreferences extends PreferenceActivity implements OnSharedP
 		
 		tempInt = Integer.parseInt(mHelperPrefs.getUserPreference(getString(R.string.pref_time_for_pause), TAG_DEFAULT_TIME_FOR_PAUSE));
 		findPreference(getString(R.string.pref_time_for_pause)).setSummary(tempInt + " milliseconds");
-		
 	}
 	
-	
-	
-	
-	
-
-	/**
-	 * Set up the {@link android.app.ActionBar}.
-	 */
-	private void setupActionBar() {
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-
-	}
 
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

@@ -38,5 +38,6 @@
     <string name="pref_continuous_dtmf_tones">pref_continuous_dtmf_tones</string>
     <string name="pref_time_for_tone">pref_time_for_tone</string>
     <string name="pref_time_for_pause">pref_time_for_pause</string>
+    <string name="pref_show_letters_with_dtmf_numbers">pref_show_letters_with_dtmf_numbers</string>
     
 </resources>

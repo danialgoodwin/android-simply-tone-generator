@@ -6,6 +6,11 @@
         android:actionProviderClass="android.widget.ShareActionProvider" />
     
     <item
+        android:id="@+id/menu_settings"
+        android:showAsAction="never"
+        android:title="@string/phrase_settings"/>
+    
+    <item
         android:id="@+id/menu_rate_app"
         android:showAsAction="never"
         android:title="@string/phrase_rate_app"/>
@@ -15,10 +20,6 @@
         android:showAsAction="never"
         android:title="@string/phrase_about"/>
     
-    <item
-        android:id="@+id/menu_settings"
-        android:showAsAction="never"
-        android:title="@string/phrase_settings"/>
     
     <item
         android:id="@+id/menu_help"

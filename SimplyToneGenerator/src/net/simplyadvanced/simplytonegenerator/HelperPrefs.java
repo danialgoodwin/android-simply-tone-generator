@@ -18,6 +18,7 @@ import android.util.Log;
 public class HelperPrefs {
 	private static final String LOG_TAG = "DEBUG: HelperPrefs";
 	private static final boolean IS_DEBUG = true;
+	@SuppressWarnings("unused")
 	private static void log(final String message) {
 		if (HelperCommon.IS_DEBUG_MODE && IS_DEBUG) {
 			Log.d(LOG_TAG, message);
