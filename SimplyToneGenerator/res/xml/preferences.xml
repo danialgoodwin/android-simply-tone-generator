@@ -7,7 +7,7 @@
         android:title="Continuous DTMF tones" />
         
     <CheckBoxPreference
-        android:defaultValue="true"
+        android:defaultValue="false"
         android:key="@string/pref_show_letters_with_dtmf_numbers"
         android:title="Letters with DTMF numbers" />
 

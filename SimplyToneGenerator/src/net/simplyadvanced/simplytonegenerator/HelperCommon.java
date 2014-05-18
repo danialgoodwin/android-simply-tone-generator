@@ -11,15 +11,6 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
-//How To Use:
-///** A singleton instance of HelperCommon. */
-//	private HelperCommon mHelperCommon;
-// 
-//	@Override
-//	public void onCreate() {
-// 	mHelperCommon = HelperCommon.getInstance(mContext);
-//	}
-
 /** Provides convenience function common to all apps. */
 public class HelperCommon {
 	private static final String LOG_TAG = "DEBUG: HelperCommon";
@@ -43,8 +34,8 @@ public class HelperCommon {
 			"Version 1.3\n" +
 			"=========\n" +
 			"1. [New Feature] Alphabet on DTMF numbers.\n" +
-//			"   - Special thanks to Andrew R. for the feature suggestion!\n" +
-			"2. [New Feature] Settings option to hide those letters.\n" +
+			"2. [New Feature] Settings option to show those letters.\n" +
+			"    - Special thanks to Andrew R. for the feature suggestions!\n" +
 			"3. [Change] DTMF playback now stops when pressed while playing. Please email me if you needed that old feature.\n" +
 			"\n" +
 			"\n" +
@@ -52,7 +43,7 @@ public class HelperCommon {
 			"=========\n" +
 			"1. [New Feature] In Settings, you can now change DTMF playback rates for tone and pause.\n" +
 			"2. Bug fix: Couldn't record DTMF when using continuous tone Setting.\n" +
-			"- Thanks to Paul D. for spotting the bug!\n" +
+			"    - Thanks to Paul D. for spotting the bug!\n" +
 			"\n" +
 			"\n" +
 			"Version 1.1\n" +

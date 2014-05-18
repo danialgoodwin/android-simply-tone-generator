@@ -41,7 +41,7 @@ public class UserPrefs {
 	}
 	
 	public boolean isShowLettersUnderDtmfNumbers() {
-		return mHelperPrefs.getUserPreference(mContext.getString(R.string.pref_show_letters_with_dtmf_numbers), true);
+		return mHelperPrefs.getUserPreference(mContext.getString(R.string.pref_show_letters_with_dtmf_numbers), false);
 	}
 	
 	
