@@ -2,6 +2,7 @@ package net.simplyadvanced.simplytonegenerator;
 
 import java.util.Locale;
 
+import net.simplyadvanced.simplytonegenerator.ui.CustomToast;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -33,8 +34,8 @@ public class FragmentActivityMain extends Activity implements ActionBar.TabListe
 	}
 
 	/* Fragments called here so that they are only initialized once. */
-	private FragmentDtmf mFragmentDtmf = new FragmentDtmf();
-	private FragmentTone mFragmentTone = new FragmentTone();
+	private static FragmentDtmf mFragmentDtmf = new FragmentDtmf();
+	private static FragmentTone mFragmentTone = new FragmentTone();
 
 	
 	
@@ -43,10 +44,10 @@ public class FragmentActivityMain extends Activity implements ActionBar.TabListe
 	/**************/
 
     /** A singleton instance of HelperPrefs. */
-	private HelperPrefs mHelperPrefs;
+	private static HelperPrefs mHelperPrefs;
 
 	/** A singleton instance of HelperCommon. */
-	private HelperCommon mHelperCommon;
+	private static HelperCommon mHelperCommon;
 	 
 	
 	
@@ -58,10 +59,10 @@ public class FragmentActivityMain extends Activity implements ActionBar.TabListe
 	 * intensive, it may be best to switch to a
 	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
 	 */
-	private SectionsPagerAdapter mSectionsPagerAdapter;
+	private static SectionsPagerAdapter mSectionsPagerAdapter;
 
 	/** The {@link ViewPager} that will host the section contents. */
-	private ViewPager mViewPager;
+	private static ViewPager mViewPager;
 	
 
 	
@@ -108,9 +109,14 @@ public class FragmentActivityMain extends Activity implements ActionBar.TabListe
 	private void setupTabs() {
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
+		if (actionBar == null) { // ADDED: Hopefully, this will prevent some errors. TODOv2: Use a different method if null. 2014-05-23.
+			CustomToast.show(FragmentActivityMain.this, "Sorry, this device is not supported yet, please email developer with your device type.");
+			finish();
+			return; // Just-in-case.
+		}
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-		// Create the adapter that will return a fragment for each of the three
+		// Create the adapter that will return a fragment for each of the
 		// primary sections of the app.
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
 
@@ -121,7 +127,7 @@ public class FragmentActivityMain extends Activity implements ActionBar.TabListe
 		// When swiping between different sections, select the corresponding
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
 		// a reference to the Tab.
-		mViewPager .setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 			@Override
 			public void onPageSelected(int position) {
 				actionBar.setSelectedNavigationItem(position);
@@ -144,7 +150,6 @@ public class FragmentActivityMain extends Activity implements ActionBar.TabListe
 	}
 	
 	
-	
 
 	/*************/
 	/* Lifecycle */
@@ -155,25 +160,7 @@ public class FragmentActivityMain extends Activity implements ActionBar.TabListe
 		mHelperPrefs.saveFragmentActivityMainSavedTabPosition(mViewPager.getCurrentItem());
 		super.onPause();
 	}
-
-	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-	}
-
-	@Override
-	public void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
-	}
-
-	@Override
-	public void onStop() {
-		// TODO Auto-generated method stub
-		super.onStop();
-	}
-
+	
 
 
 	/********************/
@@ -188,10 +175,10 @@ public class FragmentActivityMain extends Activity implements ActionBar.TabListe
 	}
 
 	@Override
-	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) { }
+	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
 
 	@Override
-	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) { }
+	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
 
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -234,7 +221,8 @@ public class FragmentActivityMain extends Activity implements ActionBar.TabListe
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			Locale l = Locale.getDefault();
+			Locale l = Locale.ENGLISH; // ADDED: For hopefully less errors. 2014-05-23
+//			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
 				return getString(R.string.title_section1).toUpperCase(l);
@@ -261,7 +249,7 @@ public class FragmentActivityMain extends Activity implements ActionBar.TabListe
 		 */
 		public static final String ARG_SECTION_NUMBER = "section_number";
 
-		public DummySectionFragment() { }
+		public DummySectionFragment() {}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -278,6 +266,7 @@ public class FragmentActivityMain extends Activity implements ActionBar.TabListe
 	/* Menu Stuff */
 	/**************/
 
+	@SuppressWarnings("unused")
 	private Menu mMenu;
 
     private ShareActionProvider mShareActionProvider;
@@ -341,17 +330,17 @@ public class FragmentActivityMain extends Activity implements ActionBar.TabListe
         }
 	}
 	
-	private void hideMenuOption(final int id) {
-		if (mMenu != null) {
-			mMenu.findItem(id).setVisible(false);
-		}
-	}
-	
-	private void showMenuOption(final int id) {
-		if (mMenu != null) {
-		    mMenu.findItem(id).setVisible(true);
-		}
-	}
+//	private void hideMenuOption(final int id) {
+//		if (mMenu != null) {
+//			mMenu.findItem(id).setVisible(false);
+//		}
+//	}
+//	
+//	private void showMenuOption(final int id) {
+//		if (mMenu != null) {
+//		    mMenu.findItem(id).setVisible(true);
+//		}
+//	}
 
 	private Intent getDefaultShareIntent() {
 	    Intent shareIntent = new Intent(Intent.ACTION_SEND);

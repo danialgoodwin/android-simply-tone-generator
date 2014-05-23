@@ -49,7 +49,7 @@ public class FragmentTone extends Fragment {
 	private static Activity mActivity;
 	
     /** A singleton instance of HelperPrefs. */
-	private HelperPrefs mHelperPrefs;
+	private static HelperPrefs mHelperPrefs;
     
 	/** The View representing what FragmentActivityMain is showing. */
 	private View mViewActivity;
@@ -108,7 +108,7 @@ public class FragmentTone extends Fragment {
 		
 		seekBarToneFreq.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) { }
+			public void onStopTrackingTouch(SeekBar seekBar) {}
 			
 			// Ensures that seekBarToneFreq is properly set after done editing EditText's.
 			@Override
@@ -405,18 +405,6 @@ public class FragmentTone extends Fragment {
 	/*************/
 	/* Lifecycle */
 	/*************/
-
-	@Override
-	public void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-	}
-
-	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-	}
 	
 	@Override
 	public void onStart() {
@@ -433,6 +421,7 @@ public class FragmentTone extends Fragment {
 
 	@Override
 	public void onStop() {
+		validateAllInput();
 		final int freq = Integer.valueOf(editTextToneFreq.getText().toString());
 		final int maxFreq = Integer.valueOf(editTextToneFreqMax.getText().toString());
 		final int minFreq = Integer.valueOf(editTextToneFreqMin.getText().toString());
@@ -449,9 +438,23 @@ public class FragmentTone extends Fragment {
 	/********************/
 	
 	private void validateAllInput() {
-		if (editTextToneFreqMin.getText().toString().equalsIgnoreCase("")) { editTextToneFreqMin.setText("0"); }
-		if (editTextToneFreqMax.getText().toString().equalsIgnoreCase("")) { editTextToneFreqMax.setText("0"); }
-		if (editTextToneFreq.getText().toString().equalsIgnoreCase("")) {    editTextToneFreq.setText("0"); }
+		if (editTextToneFreqMin.getText().toString().trim().equalsIgnoreCase("")) { editTextToneFreqMin.setText("0"); }
+		if (editTextToneFreqMax.getText().toString().trim().equalsIgnoreCase("")) { editTextToneFreqMax.setText("0"); }
+		if (editTextToneFreq.getText().toString().trim().equalsIgnoreCase(""))    { editTextToneFreq.setText("0"); }
+
+		normalizeInput(editTextToneFreqMin);
+		normalizeInput(editTextToneFreqMax);
+		normalizeInput(editTextToneFreq);
+	}
+	
+	private static void normalizeInput(EditText editText) {
+		if (editText == null) { return; }
+		double value = Double.valueOf(editText.getText().toString());
+		if (value > Integer.MAX_VALUE) {
+			editText.setText("" + Integer.MAX_VALUE);
+		} else if (value < Integer.MIN_VALUE) {
+			editText.setText("" + Integer.MIN_VALUE);
+		}
 	}
 	
 	private void setCorrectSeekBarPosition(final int min, final int progress, final int max) {
@@ -499,7 +502,6 @@ public class FragmentTone extends Fragment {
 			// in 16 bit wav PCM, first byte is the low order byte
 			generatedSnd[idx++] = (byte) (val & 0x00ff);
 			generatedSnd[idx++] = (byte) ((val & 0xff00) >>> 8);
-
 		}
 	}
 	
@@ -517,8 +519,6 @@ public class FragmentTone extends Fragment {
 	
 	
 	
-	
-
 	/**************/
 	/* Menu Stuff */
 	/**************/

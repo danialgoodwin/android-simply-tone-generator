@@ -49,7 +49,7 @@ public class HelperPrefs {
     private HelperPrefs(final Context context) {
     	mContext = context;
     	sPref = PreferenceManager.getDefaultSharedPreferences(mContext); // Mainly user preferences from ActivityPreferences.
-    	settings = context.getSharedPreferences(PREFS_NAME, 0); // Use this if don't need to access multiple processes.
+//    	settings = context.getSharedPreferences(PREFS_NAME, 0); // Use this if don't need to access multiple processes.
     	settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_MULTI_PROCESS); // Use this if need to access multiple processes.
     	// More modes: http://developer.android.com/reference/android/content/Context.html#getSharedPreferences(java.lang.String, int)
     }

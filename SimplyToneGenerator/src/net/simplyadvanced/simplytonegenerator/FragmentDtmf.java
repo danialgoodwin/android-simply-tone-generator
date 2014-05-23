@@ -41,13 +41,13 @@ public class FragmentDtmf extends Fragment implements OnTouchListener {
 	private static Activity mActivity;
 
     /** A singleton instance of HelperPrefs. */
-	private HelperPrefs mHelperPrefs;
+	private static HelperPrefs mHelperPrefs;
 
     /** A singleton instance of DtmfUtils. */
-	private DtmfUtils mDtmfUtils;
+	private static DtmfUtils mDtmfUtils;
 
     /** A singleton instance of UserPrefs. */
-	private UserPrefs mUserPrefs;
+	private static UserPrefs mUserPrefs;
 	
 	/** The View representing what FragmentActivityMain is showing. */
 	private View mViewActivity;
@@ -73,7 +73,7 @@ public class FragmentDtmf extends Fragment implements OnTouchListener {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		mActivity = getActivity();
+		mActivity = activity;
 	}
 
 	@Override
