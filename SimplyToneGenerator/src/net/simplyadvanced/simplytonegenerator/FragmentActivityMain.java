@@ -19,7 +19,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
@@ -67,11 +66,6 @@ public class FragmentActivityMain extends Activity implements ActionBar.TabListe
 	
 
 	
-	
-
-    
-	
-	
 	/******************/
 	/* Initialization */
 	/******************/
@@ -87,7 +81,7 @@ public class FragmentActivityMain extends Activity implements ActionBar.TabListe
 	    // use Theme.NoTitleBar. You can add an Action Bar to your own themes
 	    // by adding the element <item name="android:windowActionBar">true</item>
 	    // to your style definition.
-	    getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+//	    getWindow().requestFeature(Window.FEATURE_ACTION_BAR); // Goes before setContextView(). // Set in style theme now.
 	    
 		setContentView(R.layout.fragment_activity_main);
 
@@ -121,6 +115,7 @@ public class FragmentActivityMain extends Activity implements ActionBar.TabListe
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
 		if (actionBar == null) { // ADDED: Hopefully, this will prevent some errors. TODOv2: Use a different method if null. 2014-05-23.
+			// NOTE: If this happens, make sure that the ActionBar is enabled, preferrably via style xml.
 			CustomToast.show(FragmentActivityMain.this, "Sorry, this device is not supported yet, please email developer with your device type.");
 			finish();
 			return; // Just-in-case.

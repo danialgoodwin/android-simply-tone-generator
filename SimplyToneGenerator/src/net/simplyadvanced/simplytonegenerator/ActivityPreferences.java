@@ -1,14 +1,17 @@
 package net.simplyadvanced.simplytonegenerator;
 
+import net.simplyadvanced.simplytonegenerator.ui.CustomToast;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.support.v4.app.NavUtils;
 
 public class ActivityPreferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
@@ -31,12 +34,21 @@ public class ActivityPreferences extends PreferenceActivity implements OnSharedP
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+//	    getWindow().requestFeature(Window.FEATURE_ACTION_BAR); // Goes before setContextView(). // Set in style theme now.
         addPreferencesFromResource(R.xml.preferences); // Mainly use this line for API 11 and prior // Use fragments for API 11+
 
-        mHelperPrefs = HelperPrefs.getInstance(this);
-        
+		// Set up the action bar.
+		final ActionBar actionBar = getActionBar();
+		if (actionBar == null) { // ADDED: Hopefully, this will prevent some errors. TODOv2: Use a different method if null. 2014-05-23.
+			// NOTE: If this happens, make sure that the ActionBar is enabled, preferrably via style xml.
+			CustomToast.show(ActivityPreferences.this, "Sorry, this device is not supported yet, please email developer with your device type.");
+			finish();
+			return; // Just-in-case.
+		}
 		// Show the Up button in the action bar.
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+
+        mHelperPrefs = HelperPrefs.getInstance(this);
 		
 		// Initializes summary
 //        int tempKey = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString(KEY_PREF_EDIT_WAIT_TIME, "1"));
