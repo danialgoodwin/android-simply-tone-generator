@@ -34,7 +34,7 @@ public class ActivityPreferences extends PreferenceActivity implements OnSharedP
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//	    getWindow().requestFeature(Window.FEATURE_ACTION_BAR); // Goes before setContextView(). // Set in style theme now.
+	    getWindow().requestFeature(Window.FEATURE_ACTION_BAR); // Goes before setContextView().
         addPreferencesFromResource(R.xml.preferences); // Mainly use this line for API 11 and prior // Use fragments for API 11+
 
 		// Set up the action bar.

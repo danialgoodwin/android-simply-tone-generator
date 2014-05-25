@@ -23,7 +23,7 @@ public class HelperCommon {
 	}
 	
 	
-	public static final String APP_VERSION = "1.3.3";
+	public static final String APP_VERSION = "1.3.4";
 
 	/** Determines whether or not all debug logs should show or not. If false, then hide all debug logcat messages. */
 	public static final boolean IS_DEBUG_MODE = false;
@@ -31,7 +31,7 @@ public class HelperCommon {
 	public static final String RECENT_UPDATES_PROMPT_TITLE = "Recent Updates - v" + APP_VERSION;
 	public static final String RECENT_UPDATES_PROMPT_MESSAGE =
 			"" +
-			"Version 1.3.3\n" +
+			"Version 1.3.4\n" +
 			"==========\n" +
 			"1. Bug fixes for specific devices.\n" +
 			"    - VERY, very special thanks to Voytek for the bug fixes! ;)\n" +

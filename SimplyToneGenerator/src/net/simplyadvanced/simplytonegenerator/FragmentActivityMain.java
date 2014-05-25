@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
@@ -81,7 +82,7 @@ public class FragmentActivityMain extends Activity implements ActionBar.TabListe
 	    // use Theme.NoTitleBar. You can add an Action Bar to your own themes
 	    // by adding the element <item name="android:windowActionBar">true</item>
 	    // to your style definition.
-//	    getWindow().requestFeature(Window.FEATURE_ACTION_BAR); // Goes before setContextView(). // Set in style theme now.
+	    getWindow().requestFeature(Window.FEATURE_ACTION_BAR); // Goes before setContextView().
 	    
 		setContentView(R.layout.fragment_activity_main);
 

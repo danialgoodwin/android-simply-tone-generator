@@ -14,7 +14,7 @@
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
-        <item name="android:windowActionBar">true</item>
+<!--         <item name="android:windowActionBar">true</item> Didn't work to prevent crash bug, so doing it via Java. -->
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
     
