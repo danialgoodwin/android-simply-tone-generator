@@ -21,9 +21,10 @@ public class HelperCommon {
 			Log.d(LOG_TAG, message);
 		}
 	}
+
 	
 	
-	public static final String APP_VERSION = "1.3.4";
+	public static final String APP_VERSION = "1.4";
 
 	/** Determines whether or not all debug logs should show or not. If false, then hide all debug logcat messages. */
 	public static final boolean IS_DEBUG_MODE = false;
@@ -31,10 +32,20 @@ public class HelperCommon {
 	public static final String RECENT_UPDATES_PROMPT_TITLE = "Recent Updates - v" + APP_VERSION;
 	public static final String RECENT_UPDATES_PROMPT_MESSAGE =
 			"" +
+			"Version 1.4\n" +
+			"=========\n" +
+			"1. Updated input area!\n" +
+			"2. Full edit capabilities: copy, paste, select, and cut\n" +
+			"3. Backspace feature\n" +
+			"4. Pause character input\n" +
+			"5. Two more settings options\n" +
+			"6. Ability to lock portrait orientation\n" +
+			"\n" +
+			"\n" +
 			"Version 1.3.4\n" +
 			"==========\n" +
 			"1. Bug fixes for specific devices.\n" +
-			"    - VERY, very special thanks to Voytek for the bug fixes! ;)\n" +
+			"    - Special thanks to Voytek for the bug fixes! ;)\n" +
 			"2. Slight performance increase.\n" +
 			"\n" +
 			"\n" +
@@ -104,7 +115,7 @@ public class HelperCommon {
 		    "FAQs\n" +
 		    "====\n" +
 		    "Q: What are all the pause and play times?\n" +
-		    "A: By default, recorded playback transmits signaling rate of 93 ms per digit with 40 ms pause between tones. And, basic clicks on DTMF tones are 537 ms.\n" +
+		    "A: By default, recorded playback transmits signaling rate of 93 ms per tone with 40 ms between tones. Each pause is 1 second.\n" + /* And, basic clicks on DTMF tones are 537 ms.*/
 		    "\n" +
 		    "Q: Q: What does DTMF stand for?\n" +
 		    "A: Dual-tone multi-frequency signaling.\n" +

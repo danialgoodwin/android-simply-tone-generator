@@ -1,22 +1,22 @@
 package net.simplyadvanced.simplytonegenerator;
 
 import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.net.Uri;
-import android.widget.Toast;
 
+/**  */
 public class HelperPrompts {
+	private HelperPrompts() {}
+	
 	
 	
 	private static final String HELP_PROMPT_MODE_GENERAL_MESSAGE = "\n\n(If these directions weren't clear or could be made clearer, please email us.)";
 	
 	public static final String EMAIL_SUBJECT = "Android: Simply Tone Generator App Feedback - ";
 	
-
 	
 	
 	/***************/
@@ -56,11 +56,9 @@ public class HelperPrompts {
 	
 	
 	
-	
 	/**********/
 	/* Extras */
 	/**********/
-	
 
 //	private static final String HELP_PROMPT_MYCARDVIEW_PHONE_TITLE = "More Phone Info";
 //	private static final String HELP_PROMPT_MYCARDVIEW_PHONE_MESSAGE = UtilBuild.getAllBuildInfo() + "\n";
@@ -93,7 +91,6 @@ public class HelperPrompts {
 				})
 				.show();
 	}
-	
 	
 
 
@@ -149,8 +146,4 @@ public class HelperPrompts {
 //		}
 //	}
 	
-	
-	
-	
-
 }

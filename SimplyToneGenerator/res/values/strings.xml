@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Simply Tone Generator</string>
+    <string name="app_name">Simply DTMF</string>
     <string name="title_section1">DTMF</string>
     <string name="title_section2">Tone</string>
     <string name="title_section3">Section 3</string>
@@ -28,16 +28,5 @@
     <string name="title_activity_activity_preferences">Settings</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-
-    
-    <!-- ======== -->
-    <!-- SETTINGS -->
-    <!-- ======== -->
-    
-    
-    <string name="pref_continuous_dtmf_tones">pref_continuous_dtmf_tones</string>
-    <string name="pref_time_for_tone">pref_time_for_tone</string>
-    <string name="pref_time_for_pause">pref_time_for_pause</string>
-    <string name="pref_show_letters_with_dtmf_numbers">pref_show_letters_with_dtmf_numbers</string>
     
 </resources>

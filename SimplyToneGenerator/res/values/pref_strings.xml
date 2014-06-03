@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pref_continuous_dtmf_tones">pref_continuous_dtmf_tones</string>
+    <string name="pref_time_for_tone">pref_time_for_tone</string>
+    <string name="pref_time_for_pause">pref_time_for_dtmf_pause</string>
+    <string name="pref_time_between_tones">pref_time_between_tones</string>
+    <string name="pref_show_letters_with_dtmf_numbers">pref_show_letters_with_dtmf_numbers</string>
+    
+    <string name="pref_lock_in_portrait_orientation">pref_lock_in_portrait_orientation</string>
+</resources>

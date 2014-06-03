@@ -3,9 +3,8 @@ package net.simplyadvanced.simplytonegenerator.ui;
 import android.app.Activity;
 import android.widget.Toast;
 
+/** Makes it easier to later customize the Toasts. */
 public class CustomToast {
-
-	// Prevent instantiation.
 	private CustomToast() {}
 	
 	public static void show(Activity activity, String message) {
