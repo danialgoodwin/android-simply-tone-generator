@@ -196,10 +196,7 @@ public class FragmentDtmf extends Fragment {
 		} else if (s.equalsIgnoreCase("")) {
 			buttonRecord.setText(phraseRecord);
 		} else { // If a record is already stored.
-			// Play record.
-			int timePerTone = mUserPrefs.getTimeForDtmfTone();
-			int timeBetweenTones = mUserPrefs.getTimeForBetweenDtmfTones();
-			mDialpadFragment.playOrStopDtmfInput(s, timePerTone, timeBetweenTones);
+			DtmfUtilsHelper.playOrStopDtmfString(s);
 		}
 	}
 	

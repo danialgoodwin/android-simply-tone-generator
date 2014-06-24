@@ -481,19 +481,7 @@ public class DialpadFragment extends Fragment implements View.OnClickListener,
 //    private boolean isDigitsEmpty() {
 //        return mDigits.length() == 0;
 //    }
-	
-	public void playOrStopDtmfInput(String tonePhrase, int timePerTone, int timeBetweenTones) {
-//		if (mDtmfUtils == null) { mDtmfUtils = DtmfUtils.getInstance(); }
-//		if (mDtmfUtils != null) {
-			mDtmfUtils.playOrStopDtmfString(tonePhrase, timePerTone, timeBetweenTones);
-//		}
-	}
     
-	
-	
-	
-	
-	
 	
 	
 	/******************************************/

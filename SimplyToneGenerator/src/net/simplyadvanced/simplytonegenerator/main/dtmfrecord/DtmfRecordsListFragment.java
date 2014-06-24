@@ -1,14 +1,25 @@
 package net.simplyadvanced.simplytonegenerator.main.dtmfrecord;
 
+import java.util.List;
+
 import net.simplyadvanced.simplytonegenerator.HelperCommon;
 import net.simplyadvanced.simplytonegenerator.R;
+import net.simplyadvanced.simplytonegenerator.main.dtmf.DtmfUtils;
+import net.simplyadvanced.simplytonegenerator.main.dtmf.DtmfUtilsHelper;
+import net.simplyadvanced.simplytonegenerator.main.dtmfrecord.db.DtmfRecordsDatabase;
+import net.simplyadvanced.simplytonegenerator.main.dtmfrecord.db.model.DtmfRecord;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -24,14 +35,14 @@ public class DtmfRecordsListFragment extends Fragment {
 	
 	
 	
+	private DtmfRecordsDatabase mRecordsDatabase;
+	
 	/** The Activity holding this Fragment. */
 	private Activity mActivity;
 	
 	/** The layout of this Fragment. */
 	private View mMainView;
-	
 	private ListView mRecordsListView;
-	
 	private Button mButtonAddNewRecord;
 	
 	
@@ -40,6 +51,12 @@ public class DtmfRecordsListFragment extends Fragment {
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		mActivity = activity;
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		mRecordsDatabase = new DtmfRecordsDatabase(mActivity);
 	}
 
 	@Override
@@ -59,10 +76,66 @@ public class DtmfRecordsListFragment extends Fragment {
 		
 		mRecordsListView = (ListView) mMainView.findViewById(R.id.recordsListView);
 		mButtonAddNewRecord = (Button) mMainView.findViewById(R.id.buttonAddNewRecord);
-
-//		mDialpadFragment = (DialpadFragment) getFragmentManager().findFragmentById(R.id.dialpadFragment);
+		
+		mButtonAddNewRecord.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO: Open up page to add DTMF record, then return results somehow, possibly through onActivityResults().
+		        ArrayAdapter<DtmfRecord> adapter = (ArrayAdapter<DtmfRecord>) mRecordsListView.getAdapter();
+		        DtmfRecord record = mRecordsDatabase.createRecord("Title", "1234567890ABCD*#");
+                adapter.add(record);
+		        adapter.notifyDataSetChanged();
+			}
+		});
+		
+		setupListView();
 		
 		return mMainView;
 	}
+	
+	@Override
+	public void onDestroy() {
+		mRecordsDatabase.close();
+		super.onDestroy();
+	}
+	
+	
+	
+	private void setupListView() {
+		List<DtmfRecord> values = mRecordsDatabase.getAllRecords();
+
+        // Use the SimpleCursorAdapter to show the elements in a ListView.
+        ArrayAdapter<DtmfRecord> adapter = new ArrayAdapter<DtmfRecord>(mActivity, android.R.layout.simple_list_item_1, values);
+        
+        mRecordsListView.setAdapter(adapter);
+        mRecordsListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				// TODO: Play tone.
+		        ArrayAdapter<DtmfRecord> adapter = (ArrayAdapter<DtmfRecord>) mRecordsListView.getAdapter();
+		        if (adapter.getCount() > 0) {
+		        	DtmfRecord record = (DtmfRecord) adapter.getItem(position);
+		        	String tonePhrase = record.getTone();
+		        	DtmfUtilsHelper.playOrStopDtmfString(tonePhrase);
+		        }
+			}
+		});
+        mRecordsListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				// TODO Delete tone. And, provide option to undo, edit, play.
+		        ArrayAdapter<DtmfRecord> adapter = (ArrayAdapter<DtmfRecord>) mRecordsListView.getAdapter();
+		        if (adapter.getCount() > 0) {
+		        	DtmfRecord record = (DtmfRecord) adapter.getItem(position);
+		        	mRecordsDatabase.deleteRecord(record);
+                    adapter.remove(record);
+		        }
+		        adapter.notifyDataSetChanged();
+				return false;
+			}
+		});
+	}
+	
+	
 
 }
