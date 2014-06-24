@@ -2,9 +2,9 @@
 <resources>
 
     <string name="app_name">Simply DTMF</string>
+    <string name="title_section0">Beta</string>
     <string name="title_section1">DTMF</string>
     <string name="title_section2">Tone</string>
-    <string name="title_section3">Section 3</string>
 
     <!-- ============ -->
     <!-- HelperCommon -->

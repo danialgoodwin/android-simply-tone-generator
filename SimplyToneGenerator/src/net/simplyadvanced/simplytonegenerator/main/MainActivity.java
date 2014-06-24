@@ -7,6 +7,7 @@ import net.simplyadvanced.simplytonegenerator.HelperPrefs;
 import net.simplyadvanced.simplytonegenerator.HelperPrompts;
 import net.simplyadvanced.simplytonegenerator.R;
 import net.simplyadvanced.simplytonegenerator.main.dtmf.FragmentDtmf;
+import net.simplyadvanced.simplytonegenerator.main.dtmfrecord.DtmfRecordsFragment;
 import net.simplyadvanced.simplytonegenerator.main.tone.FragmentTone;
 import net.simplyadvanced.simplytonegenerator.settings.PrefActivity;
 import net.simplyadvanced.simplytonegenerator.settings.UserPrefs;
@@ -140,6 +141,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
+		mViewPager.setOffscreenPageLimit(2);
 
 		// When swiping between different sections, select the corresponding
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
@@ -216,15 +218,14 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		@Override
 		public Fragment getItem(int position) {
 			switch (position) {
-			case 0: // Dtmf
-				// Can't use static references.
-				// More info: http://stackoverflow.com/a/24002384/887894
-				// More info: http://stackoverflow.com/a/24002141/887894
-				return new FragmentDtmf();
-			case 1: // Tone
-				return new FragmentTone();
-			default:
-				return new FragmentDtmf();
+			// Can't use static references.
+			// More info: http://stackoverflow.com/a/24002384/887894
+			// More info: http://stackoverflow.com/a/24002141/887894
+
+				case 0: return new DtmfRecordsFragment();
+				case 1: return new FragmentDtmf();
+				case 2: return new FragmentTone();
+				default: return new FragmentDtmf();
 			}
 
 //			// Return a DummySectionFragment (defined as a static inner class
@@ -239,7 +240,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		@Override
 		public int getCount() {
 			// Show 2 total pages.
-			return 2;
+			return 3;
 		}
 
 		@Override
@@ -247,12 +248,9 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 			Locale l = Locale.ENGLISH; // ADDED: For hopefully less errors. 2014-05-23
 //			Locale l = Locale.getDefault();
 			switch (position) {
-			case 0:
-				return getString(R.string.title_section1).toUpperCase(l);
-			case 1:
-				return getString(R.string.title_section2).toUpperCase(l);
-			case 2:
-				return getString(R.string.title_section3).toUpperCase(l);
+				case 0: return getString(R.string.title_section0).toUpperCase(l);
+				case 1: return getString(R.string.title_section1).toUpperCase(l);
+				case 2: return getString(R.string.title_section2).toUpperCase(l);
 			}
 			return null;
 		}
