@@ -30,7 +30,7 @@ public class DtmfRecordsDatabase extends SQLiteOpenHelper {
 	private static final String CREATE_DATABASE =
 			"create table " + TABLE_DTMF_RECORDS + "(" + 
 			COLUMN_ID + " integer primary key autoincrement, " +
-			COLUMN_TITLE + " text not null" +
+			COLUMN_TITLE + " text not null, " +
 			COLUMN_TONE + " text not null" + 
 			");";
 

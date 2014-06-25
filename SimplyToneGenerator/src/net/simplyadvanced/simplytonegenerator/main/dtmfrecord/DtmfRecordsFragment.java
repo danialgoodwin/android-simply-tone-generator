@@ -56,9 +56,13 @@ public class DtmfRecordsFragment extends Fragment {
 		mMainView = inflater.inflate(R.layout.fragment_dtmf_records, container, false);
 //    	setHasOptionsMenu(true); // Uncomment this if this fragment has specific menu options.
 
+		getFragmentManager().beginTransaction().replace(R.id.root, new DtmfRecordsListFragment(), DtmfRecordsListFragment.class.getSimpleName()).commit();
+//		getFragmentManager().beginTransaction().addFragment(R.id.root, new DtmfRecordsListFragment()).commit();
+		
 //		mDialpadFragment = (DialpadFragment) getFragmentManager().findFragmentById(R.id.dialpadFragment);
 
-		mDtmfRecordsListFragment = (DtmfRecordsListFragment) getFragmentManager().findFragmentById(R.id.dtmfRecordsListFragment);
+		mDtmfRecordsListFragment = (DtmfRecordsListFragment) getFragmentManager().findFragmentByTag(DtmfRecordsListFragment.class.getSimpleName());
+//		mDtmfRecordsListFragment = (DtmfRecordsListFragment) getFragmentManager().findFragmentById(R.id.dtmfRecordsListFragment);
 		
 		return mMainView;
 	}

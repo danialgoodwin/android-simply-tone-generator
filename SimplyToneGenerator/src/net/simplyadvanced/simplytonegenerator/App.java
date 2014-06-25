@@ -13,6 +13,7 @@ public class App extends Application {
 	public void onCreate() {
 		super.onCreate();
 		mAppContext = this;
+		DtmfRecordsUpdateHelper.moveOldRecordsToNewDatabase();
 	}
 	
 	/** Returns the application context. */

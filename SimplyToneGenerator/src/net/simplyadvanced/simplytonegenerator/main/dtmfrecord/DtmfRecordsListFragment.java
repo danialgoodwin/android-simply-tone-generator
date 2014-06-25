@@ -8,6 +8,7 @@ import net.simplyadvanced.simplytonegenerator.main.dtmf.DtmfUtils;
 import net.simplyadvanced.simplytonegenerator.main.dtmf.DtmfUtilsHelper;
 import net.simplyadvanced.simplytonegenerator.main.dtmfrecord.db.DtmfRecordsDatabase;
 import net.simplyadvanced.simplytonegenerator.main.dtmfrecord.db.model.DtmfRecord;
+import net.simplyadvanced.simplytonegenerator.ui.CustomToast;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -21,7 +22,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 public class DtmfRecordsListFragment extends Fragment {
 	private static final String LOG_TAG = "DEBUG: DtmfRecordsListFragment";
@@ -81,6 +85,7 @@ public class DtmfRecordsListFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO: Open up page to add DTMF record, then return results somehow, possibly through onActivityResults().
+				// Or, the called Fragment can save directly to database instead?
 		        ArrayAdapter<DtmfRecord> adapter = (ArrayAdapter<DtmfRecord>) mRecordsListView.getAdapter();
 		        DtmfRecord record = mRecordsDatabase.createRecord("Title", "1234567890ABCD*#");
                 adapter.add(record);
@@ -102,16 +107,28 @@ public class DtmfRecordsListFragment extends Fragment {
 	
 	
 	private void setupListView() {
-		List<DtmfRecord> values = mRecordsDatabase.getAllRecords();
+		final List<DtmfRecord> values = mRecordsDatabase.getAllRecords();
 
-        // Use the SimpleCursorAdapter to show the elements in a ListView.
-        ArrayAdapter<DtmfRecord> adapter = new ArrayAdapter<DtmfRecord>(mActivity, android.R.layout.simple_list_item_1, values);
+		// TODOv2: This can be done better.
+		ArrayAdapter<DtmfRecord> adapter = new ArrayAdapter<DtmfRecord>(mActivity, android.R.layout.simple_list_item_2, android.R.id.text1, values) {
+			@Override
+			public View getView(int position, View convertView, ViewGroup parent) {
+				View view = super.getView(position, convertView, parent);
+				TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+				TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+
+				DtmfRecord data = values.get(position);
+				text1.setText(data.getTitle());
+				text2.setText(data.getTone());
+				return view;
+			}
+		};
+//        ArrayAdapter<DtmfRecord> adapter = new ArrayAdapter<DtmfRecord>(mActivity, android.R.layout.simple_list_item_1, values);
         
         mRecordsListView.setAdapter(adapter);
         mRecordsListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				// TODO: Play tone.
 		        ArrayAdapter<DtmfRecord> adapter = (ArrayAdapter<DtmfRecord>) mRecordsListView.getAdapter();
 		        if (adapter.getCount() > 0) {
 		        	DtmfRecord record = (DtmfRecord) adapter.getItem(position);
@@ -129,6 +146,7 @@ public class DtmfRecordsListFragment extends Fragment {
 		        	DtmfRecord record = (DtmfRecord) adapter.getItem(position);
 		        	mRecordsDatabase.deleteRecord(record);
                     adapter.remove(record);
+                    CustomToast.show(mActivity, "Record deleted");
 		        }
 		        adapter.notifyDataSetChanged();
 				return false;
@@ -136,6 +154,4 @@ public class DtmfRecordsListFragment extends Fragment {
 		});
 	}
 	
-	
-
 }

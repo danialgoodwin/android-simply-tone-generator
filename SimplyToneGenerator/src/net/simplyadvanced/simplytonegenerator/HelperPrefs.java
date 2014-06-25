@@ -64,7 +64,7 @@ public class HelperPrefs {
 	private SharedPreferences sPref;
 	private SharedPreferences settings;
 	
-	private static final int DEFAULT_FRAGMENT_ACTIVITY_MAIN_SAVED_TAB_POSITION = 0; // Okay to change.
+	private static final int DEFAULT_FRAGMENT_ACTIVITY_MAIN_SAVED_TAB_POSITION = 1; // Okay to change.
 	
 	private static final String TAG_PREF_FRAGMENT_ACTIVITY_MAIN_SAVED_TAB_POSITION = "prefFragmentActivityMainSavedTabPosition";
 	private static final String TAG_PREF_NUMBER_OF_TIMES_OPENED_THIS_VERSION = "prefNumberOfTimesOpenedThisVersion" + HelperCommon.APP_VERSION;
