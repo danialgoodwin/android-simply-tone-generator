@@ -8,7 +8,6 @@ import net.simplyadvanced.simplytonegenerator.HelperPrefs;
 import net.simplyadvanced.simplytonegenerator.HelperPrompts;
 import net.simplyadvanced.simplytonegenerator.R;
 import net.simplyadvanced.simplytonegenerator.mainpage.dtmf.FragmentDtmf;
-import net.simplyadvanced.simplytonegenerator.mainpage.dtmfrecord.DtmfRecordsFragment;
 import net.simplyadvanced.simplytonegenerator.mainpage.dtmfrecord.DtmfRecordsListFragment;
 import net.simplyadvanced.simplytonegenerator.mainpage.tone.FragmentTone;
 import net.simplyadvanced.simplytonegenerator.settings.PrefActivity;
@@ -181,7 +180,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			// More info: http://stackoverflow.com/a/24002141/887894
 
 				case 0: return new DtmfRecordsListFragment();
-//				case 0: return new DtmfRecordsFragment();
 				case 1: return new FragmentDtmf();
 				case 2: return new FragmentTone();
 				default: return new FragmentDtmf();

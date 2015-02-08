@@ -1,11 +1,11 @@
 package net.simplyadvanced.simplytonegenerator.mainpage.dtmfrecord.db.model;
 
+/** Model to represent a single DTMF record. */
 public class DtmfRecord {
 
     private long id;
     private String title;
     private String tone;
-
 
     public DtmfRecord(long id, String title, String tone) {
     	this.id = id;

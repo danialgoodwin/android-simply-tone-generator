@@ -33,7 +33,6 @@ public class HelperCommon {
 			"\n" +
 			"Changes still to come\n" +
 			"- Ability to edit records after saved\n" +
-			"- Better interface\n" +
 			"- More thanks for beta testers!\n" +
 			"\n" +
 			"\n" +

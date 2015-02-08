@@ -101,8 +101,9 @@ public class DtmfRecordsListFragment extends Fragment {
 	private void setupListView() {
 		final List<DtmfRecord> values = mRecordsDatabase.getAllRecords();
 
-		// TODOv2: This can be done better.
-		ArrayAdapter<DtmfRecord> adapter = new ArrayAdapter<DtmfRecord>(mActivity, android.R.layout.simple_list_item_2, android.R.id.text1, values) {
+        // TODOv2: Eventually, possibly use the View-Holder pattern for this.
+		ArrayAdapter<DtmfRecord> adapter = new ArrayAdapter<DtmfRecord>(mActivity,
+                android.R.layout.simple_list_item_2, android.R.id.text1, values) {
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
 				View view = super.getView(position, convertView, parent);
@@ -115,7 +116,6 @@ public class DtmfRecordsListFragment extends Fragment {
 				return view;
 			}
 		};
-//        ArrayAdapter<DtmfRecord> adapter = new ArrayAdapter<DtmfRecord>(mActivity, android.R.layout.simple_list_item_1, values);
         
         mRecordsListView.setAdapter(adapter);
         mRecordsListView.setOnItemClickListener(new OnItemClickListener() {
