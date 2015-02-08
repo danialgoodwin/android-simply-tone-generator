@@ -21,11 +21,9 @@ public class HelperCommon {
 		}
 	}
 
-	
-	
-	public static final String APP_VERSION = "1.5b";
 
-	public static final String RECENT_UPDATES_PROMPT_TITLE = "Recent Updates - v" + APP_VERSION;
+
+	public static final String RECENT_UPDATES_PROMPT_TITLE = "Recent Updates - v" + AppVersion.getName();
 	public static final String RECENT_UPDATES_PROMPT_MESSAGE =
 			"" +
 			"Version 1.5b\n" +
@@ -91,7 +89,7 @@ public class HelperCommon {
 			"This was a weekend side-project. I welcome all feedback!\n"
 	;
 	
-    public static final String HELP_PROMPT_TITLE = "Help - v" + APP_VERSION;
+    public static final String HELP_PROMPT_TITLE = "Help - v" + AppVersion.getName();
     public static final String HELP_PROMPT_MESSAGE =
     		"Directions\n" +
 	        "=========\n" +
@@ -141,7 +139,7 @@ public class HelperCommon {
 			"Depending on the device and audio hardware, tones may not sound exact.\n"
 	;
     
-	public static final String EMAIL_SUBJECT = "Android: Simply Tone Generator App Feedback";
+	public static final String EMAIL_SUBJECT = "Android: Simply DTMF App Feedback";
 	
 	
 	
@@ -150,13 +148,13 @@ public class HelperCommon {
 	/******************/
 	
 	/** The application context. */
-	private Context mContext;
+	private Context mAppContext;
 
     /** A singleton instance of HelperCommon. */
     private static HelperCommon sHelper;
     
-    /** Returns a singleton instance of HelperCommon. */
-    public static HelperCommon getInstance(final Context context) {
+    /** Returns a singleton instance of this class. */
+    public static HelperCommon getInstance(Context context) {
         if (sHelper == null) {
             // Always pass in the Application Context
             sHelper = new HelperCommon(context.getApplicationContext());
@@ -164,8 +162,8 @@ public class HelperCommon {
         return sHelper;
     }
 
-    private HelperCommon(Context context) {
-    	mContext = context;
+    private HelperCommon(Context appContext) {
+        mAppContext = appContext;
     }
 	
 
@@ -184,24 +182,24 @@ public class HelperCommon {
 	
 	
     /** Brings up this app in Google Play, if available. */
-	public void launchAppInGooglePlay(final Context context) {
+	public void launchAppInGooglePlay(Context context) {
 		Uri uri = Uri.parse("market://details?id=" + context.getPackageName()); // Opens app page in Google Play // Good for allowing users to rate app
 		Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
 		try {
 			context.startActivity(myAppLinkToMarket); // This must be an Activity Context, NOT Application Context.
 		} catch (ActivityNotFoundException e) {
-			Toast.makeText(mContext, "Unable to find app", Toast.LENGTH_SHORT).show();
+			Toast.makeText(mAppContext, "Unable to find app", Toast.LENGTH_SHORT).show();
 		}
 	}
 
 
 	/** Launches an Intent to send email. Uses default values for message. */
-	public void sendEmail(final Context context, final String title) {
+	public void sendEmail(Context context, String title) {
 		sendEmail(context, title, "");
 	}
 	
     /** This opens an Intent to send an email to "feedback@simplyadvanced.net?subject=Android: Simply Advanced Unit Converter". */
-    public void sendEmail(final Context context, final String title, final String message) {
+    public void sendEmail(Context context, String title, String message) {
     	try {
     		Intent emailIntent = new Intent(Intent.ACTION_SEND);
     		emailIntent.setType("vnd.android.cursor.dir/email"); // Or "text/plain" "text/html" "video/mp4"

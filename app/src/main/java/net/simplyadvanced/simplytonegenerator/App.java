@@ -3,8 +3,8 @@ package net.simplyadvanced.simplytonegenerator;
 import android.app.Application;
 import android.content.Context;
 
-/** The base Application class for Simply Tone Generator. This is the
- * very first and last thing that is run. */
+/** The base application to initialize things once.
+ * Provides a convenience method for getting Context, which should be used as little as possible. */
 public class App extends Application {
 
 	private static Context mAppContext;

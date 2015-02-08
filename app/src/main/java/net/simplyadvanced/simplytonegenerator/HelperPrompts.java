@@ -16,7 +16,7 @@ public class HelperPrompts {
 
     public static final String EMAIL_SUBJECT = "Android: Simply DTMF Tone Generator App Feedback - ";
 
-    public static final String ABOUT_TITLE = "About - v" + HelperCommon.APP_VERSION;
+    public static final String ABOUT_TITLE = "About - v" + AppVersion.getName();
     public static final String ABOUT_MESSAGE = "\"The function of good software is to make the complex appear to be simple.\" - Grady Booch\n\n" +
             "Developer's message:\nHi, my name is Danial Goodwin. I hope you are enjoying this app. This started off as just a weekend side-project, but is growing much more than I expected. " +
             "If you find this app useful, then please consider contributing to support my development costs. Any amount contributed would mean a lot to me. Thank you.\n\n" +

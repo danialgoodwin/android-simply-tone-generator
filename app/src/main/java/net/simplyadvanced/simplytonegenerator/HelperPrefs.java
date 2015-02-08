@@ -57,7 +57,7 @@ public class HelperPrefs {
 	private static final int DEFAULT_FRAGMENT_ACTIVITY_MAIN_SAVED_TAB_POSITION = 1; // Okay to change.
 	
 	private static final String TAG_PREF_FRAGMENT_ACTIVITY_MAIN_SAVED_TAB_POSITION = "prefFragmentActivityMainSavedTabPosition";
-	private static final String TAG_PREF_NUMBER_OF_TIMES_OPENED_THIS_VERSION = "prefNumberOfTimesOpenedThisVersion" + HelperCommon.APP_VERSION;
+	private static final String TAG_PREF_NUMBER_OF_TIMES_OPENED_THIS_VERSION = "prefNumberOfTimesOpenedThisVersion" + AppVersion.getName();
 	private static final String TAG_PREF_NUMBER_OF_TIMES_OPENED_APP = "prefNumberOfTimesOpenedApp";
 	
     public static final String TAG_PREF_TOTAL_NUMBER_TIMES_OPENED = "prefTotalNumberTimesOpened";
