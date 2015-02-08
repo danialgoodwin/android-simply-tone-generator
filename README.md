@@ -1,3 +1,0 @@
-# Simply Tone Generator #
-
-Play a tone, any tone. This app is basically two apps in one. One side is a simple DTMF tone generator, and the other side is produce-any-tone-you-want signal generator. You can hear what any frequency sounds like. The help screen in-app also provides the official frequencies for DTMF tones. When playing back recorded DTMF numbers, put your Android phone near the analog telephone's speaker so that you can dial through your PSTN (Public switched telephone network) phone.
