@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true" >
+    
+    <!-- style="?android:buttonBarStyle" -->
+    <!-- style="?android:borderlessButtonStyle" -->
+
+    <!-- android:digits="0123456789ABCD*#" -->
+
+    
+    <LinearLayout
+        android:id="@+id/titleInputContainer"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+        
+        <Space
+	       android:layout_width="56dp"
+	       android:layout_height="match_parent" />
+        
+	    <EditText
+	        android:id="@+id/editTextTitle"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:hint="@string/dtmf_input_title_label"
+	        android:inputType="textCapWords"
+	        android:layout_weight="1"
+            android:gravity="center"
+            android:scrollHorizontally="true"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:freezesText="true"
+            android:textSize="@dimen/dtmfRecordButtonTextSize" />
+	    
+        <Space
+           android:layout_width="56dp"
+           android:layout_height="match_parent" />
+	    
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/digitsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+        
+        <Button
+            android:id="@+id/pauseButton"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=","
+            android:background="?android:attr/selectableItemBackground"
+            tools:ignore="HardcodedText" />
+
+        <net.simplyadvanced.simplytonegenerator.widget.KeyboardlessEditText
+            android:id="@+id/editTextRecord"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:scrollHorizontally="true"
+            android:maxLines="1"
+            android:hint="@string/dtmf_input_tone_label"
+            android:singleLine="true"
+                android:freezesText="true"
+            android:focusableInTouchMode="true"
+            android:textSize="@dimen/dtmfRecordButtonTextSize" />
+<!--            android:textIsSelectable="true" -->
+<!--            android:focusable="true" -->
+<!--            android:textAllCaps="true" -->
+<!--             android:paddingLeft="10dp" -->
+    
+        <ImageButton
+            android:id="@+id/backspaceButton"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:state_enabled="false"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@android:drawable/ic_input_delete"
+            android:contentDescription="@string/dtmf_input_backspace_content_description"/>
+<!--             android:layout_width="56dp" -->
+<!--             android:contentDescription="@string/description_delete_button" -->
+<!--             android:src="@drawable/ic_dial_action_delete" -->
+<!--             android:padding="8dp" -->
+    
+    </LinearLayout>
+    
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/button1"
+            style="@style/styleButtonDtmfTone"
+            android:text="1"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/button2"
+            style="@style/styleButtonDtmfTone"
+            android:text="2"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/button3"
+            style="@style/styleButtonDtmfTone"
+            android:text="3"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/buttonA"
+            style="@style/styleButtonDtmfTone"
+            android:text="A"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/button4"
+            style="@style/styleButtonDtmfTone"
+            android:text="4"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/button5"
+            style="@style/styleButtonDtmfTone"
+            android:text="5"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/button6"
+            style="@style/styleButtonDtmfTone"
+            android:text="6"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/buttonB"
+            style="@style/styleButtonDtmfTone"
+            android:text="B"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/button7"
+            style="@style/styleButtonDtmfTone"
+            android:text="7"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/button8"
+            style="@style/styleButtonDtmfTone"
+            android:text="8"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/button9"
+            style="@style/styleButtonDtmfTone"
+            android:text="9"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/buttonC"
+            style="@style/styleButtonDtmfTone"
+            android:text="C"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/buttonS"
+            style="@style/styleButtonDtmfTone"
+            android:text="*"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/button0"
+            style="@style/styleButtonDtmfTone"
+            android:text="0"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/buttonP"
+            style="@style/styleButtonDtmfTone"
+            android:text="#"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/buttonD"
+            style="@style/styleButtonDtmfTone"
+            android:text="D"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+</LinearLayout>
