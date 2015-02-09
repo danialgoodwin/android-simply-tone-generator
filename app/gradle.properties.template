@@ -1,0 +1,11 @@
+FREE_STORE_FILE=../keystore-free.jks
+FREE_STORE_PASSWORD=password
+FREE_KEY_ALIAS=alias
+FREE_KEY_PASSWORD=password
+FREE_OUTPUT_DIR=
+
+PRO_STORE_FILE=../keystore-pro.jks
+PRO_STORE_PASSWORD=password
+PRO_KEY_ALIAS=alias
+PRO_KEY_PASSWORD=password
+PRO_OUTPUT_DIR=

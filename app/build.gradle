@@ -11,16 +11,25 @@ android {
         versionCode 12
         versionName "1.6"
     }
+    signingConfigs {
+        release {
+            storeFile file(STORE_FILE)
+            storePassword STORE_PASSWORD
+            keyAlias KEY_ALIAS
+            keyPassword KEY_PASSWORD
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    // Required for ViewPager.
+    // Required for ViewPager, and thus requiring support Fragments and FragmentActivity.
     compile 'com.android.support:support-v13:21.0.3'
 }
