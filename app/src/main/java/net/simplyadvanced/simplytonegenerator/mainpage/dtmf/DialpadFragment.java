@@ -3,6 +3,7 @@ package net.simplyadvanced.simplytonegenerator.mainpage.dtmf;
 import java.util.HashSet;
 
 import net.simplyadvanced.simplytonegenerator.R;
+import net.simplyadvanced.simplytonegenerator.mainpage.dtmfrecord.db.model.DtmfRecord;
 
 import android.graphics.PorterDuff; // Eclipse doesn't give this as an option
 import android.media.ToneGenerator;
@@ -29,8 +30,8 @@ public class DialpadFragment extends Fragment implements View.OnClickListener,
 	
 	
 	private OnInputChangedListener mOnInputChangedListener;
-	
-	public interface OnInputChangedListener {
+
+    public interface OnInputChangedListener {
 		void onInputChanged(Editable editable);
 	}
 	
@@ -418,7 +419,7 @@ public class DialpadFragment extends Fragment implements View.OnClickListener,
     
     /** Returns the current String from input area. If not available, then
      * returns empty String. */
-    public String getInput() {
+    public String getToneInput() {
     	if (mDigits != null) {
     		return mDigits.getText().toString();
     	}
@@ -427,22 +428,31 @@ public class DialpadFragment extends Fragment implements View.OnClickListener,
     
     /** Returns the current String from input title area. If not available, then
      * returns empty String. */
-    public String getInputTitle() {
+    public String getTitleInput() {
     	if (mTitleInput != null) {
     		return mTitleInput.getText().toString();
     	}
     	return "";
     }
     
-    /** Show/hide input area with true/false. */
-    public void showInputArea(boolean show) {
-    	if (show) {
+    /** Show or hide input area.
+     * @param isShow set true to show input area, set false to hide input area */
+    public void showInputArea(boolean isShow) {
+    	if (isShow) {
     		mTitleInputContainer.setVisibility(View.VISIBLE);
     		mDigitsContainer.setVisibility(View.VISIBLE);
     	} else {
     		mDigitsContainer.setVisibility(View.GONE);
     		mTitleInputContainer.setVisibility(View.GONE);
     	}
+    }
+
+    /** Show or hide input area and put the record in the input area.
+     * @param isShow set true to show input area, set false to hide input area */
+    public void showInputArea(DtmfRecord record, boolean isShow) {
+        showInputArea(isShow);
+        mTitleInput.setText(record.getTitle());
+        mDigits.setText(record.getTone());
     }
     
     /** Returns true if input area is showing, otherwise false. */

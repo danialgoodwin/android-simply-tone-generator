@@ -32,7 +32,8 @@ public class FragmentDtmf extends Fragment {
 	}
 
 
-	
+	private static final String IS_EDIT_ONE_RECORD_ONLY = "is_edit_one_record_only";
+
 	private Activity mActivity;
 	private UserPrefs mUserPrefs;
 
@@ -42,10 +43,28 @@ public class FragmentDtmf extends Fragment {
 	private Button mButtonRecord;
 	private Button mButtonCancel;
 
+    /** The one DtmfRecord that may be passed in as an argument and pre-filled in the inputs. */
+    private DtmfRecord mDtmfRecordFromArgs;
+
+    /** Whether or not this Fragment instance should only allow one record to be pre-filled
+     * in input fields and updated just once. */
+    private boolean mIsEditOneRecordOnly = false;
 
 
     // Required empty constructor for Fragments.
     public FragmentDtmf() {}
+
+    /** Create a new Fragment with a DTMF record that should be edited and saved/cancelled. */
+    public static FragmentDtmf newInstance(DtmfRecord record) {
+        FragmentDtmf fragment = new FragmentDtmf();
+        Bundle args = new Bundle();
+        args.putBoolean(IS_EDIT_ONE_RECORD_ONLY, true);
+        args.putLong(DtmfRecord.ID, record.getId());
+        args.putString(DtmfRecord.TITLE, record.getTitle());
+        args.putString(DtmfRecord.TONE, record.getTone());
+        fragment.setArguments(args);
+        return fragment;
+    }
 	
 	@Override
 	public void onAttach(Activity activity) {
@@ -57,7 +76,16 @@ public class FragmentDtmf extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mRecordsDatabase = new DtmfRecordsDatabase(mActivity);
-	}
+
+        Bundle args = getArguments();
+        if (args != null) {
+            mIsEditOneRecordOnly = args.getBoolean(IS_EDIT_ONE_RECORD_ONLY);
+            long id = args.getLong(DtmfRecord.ID);
+            String title = args.getString(DtmfRecord.TITLE);
+            String tone = args.getString(DtmfRecord.TONE);
+            mDtmfRecordFromArgs = new DtmfRecord(id, title, tone);
+        }
+    }
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,22 +99,16 @@ public class FragmentDtmf extends Fragment {
 			// the view hierarchy; it would just never be used.
 			return null;
 		}
-		/* The View representing what FragmentActivityMain is showing. */
-        View viewActivity = inflater.inflate(R.layout.fragment_dtmf, container, false);
 //    	setHasOptionsMenu(true); // Uncomment this if this fragment has specific menu options.
-
+        View viewActivity = inflater.inflate(R.layout.fragment_dtmf, container, false);
 		mDialpadFragment = (DialpadFragment) getChildFragmentManager().findFragmentById(R.id.dialpadFragment);
-//		mDialpadFragment = (DialpadFragment) getFragmentManager().findFragmentById(R.id.dialpadFragment);
+        mButtonRecord = (Button) viewActivity.findViewById(R.id.buttonRecord);
+        mButtonCancel = (Button) viewActivity.findViewById(R.id.buttonCancel);
 
     	mUserPrefs = UserPrefs.getInstance();
-		
-    	mButtonRecord = (Button) viewActivity.findViewById(R.id.buttonRecord);
-		mButtonCancel = (Button) viewActivity.findViewById(R.id.buttonCancel);
-		
+
 		mButtonRecord.setOnClickListener(new OnClickListener() { @Override public void onClick(View v) { pressButtonRecordSave(); }});
 		mButtonCancel.setOnClickListener(new OnClickListener() { @Override public void onClick(View v) { pressButtonCancel(); }});	
-		
-		setupViews();
 		
 		return viewActivity;
 	}
@@ -94,6 +116,11 @@ public class FragmentDtmf extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+        if (mDtmfRecordFromArgs != null) {
+            mDialpadFragment.showInputArea(mDtmfRecordFromArgs, true);
+            mButtonRecord.setText(PHRASE_SAVE);
+            mButtonCancel.setVisibility(View.VISIBLE);
+        }
 		setupViews();
 	}
 	
@@ -121,14 +148,28 @@ public class FragmentDtmf extends Fragment {
 		} else { // Clicked "Save"
 			mDialpadFragment.showInputArea(false);
 
-			String tonePhrase = mDialpadFragment.getInput();
-			String title = mDialpadFragment.getInputTitle();
+			String tonePhrase = mDialpadFragment.getToneInput();
+			String title = mDialpadFragment.getTitleInput();
 			title = TextUtils.isEmpty(title) ? tonePhrase : title;
-			if (!tonePhrase.isEmpty()) {
-		        DtmfRecord record = mRecordsDatabase.createRecord(title, tonePhrase);
-		        DtmfRecordsListFragment.updateListView(record); // TODOv2: Don't call this static method way because it will lead to complications in the future.
+            if (mDtmfRecordFromArgs != null) {
+                mRecordsDatabase.updateRecord(mDtmfRecordFromArgs.setTitle(title).setTone(tonePhrase));
+                DtmfRecordsListFragment.updateListView(mDtmfRecordFromArgs); // TODOv2: Don't call this static method way because it will lead to complications in the future. Create callback instead.
+                CustomToast.show(mActivity, "Saved");
+
+                if (mIsEditOneRecordOnly) {
+                    mActivity.finish();
+                    return; // Prevents button text from changing while navigating away.
+                }
+            } else if (!tonePhrase.isEmpty()) {
+		        DtmfRecord record = mRecordsDatabase.insertRecord(title, tonePhrase);
+		        DtmfRecordsListFragment.updateListView(record); // TODOv2: Don't call this static method way because it will lead to complications in the future. Create callback instead.
 				CustomToast.show(mActivity, "Saved");
 				mDialpadFragment.clearInputArea();
+
+                if (mIsEditOneRecordOnly) {
+                    mActivity.finish();
+                    return; // Prevents button text from changing while navigating away.
+                }
 			}
 			
 			mButtonRecord.setText(PHRASE_RECORD);
@@ -137,10 +178,14 @@ public class FragmentDtmf extends Fragment {
 	}
 	
 	private void pressButtonCancel() {
-		mDialpadFragment.showInputArea(false);
-//		mDialpadFragment.clearInputArea(); // Nah, just in case.
-		mButtonRecord.setText(PHRASE_RECORD);
-		mButtonCancel.setVisibility(View.GONE);
+        if (mIsEditOneRecordOnly) {
+            mActivity.finish();
+        } else {
+            mDialpadFragment.showInputArea(false);
+//	        mDialpadFragment.clearInputArea(); // Nah, just in case user wants to edit same values again.
+            mButtonRecord.setText(PHRASE_RECORD);
+            mButtonCancel.setVisibility(View.GONE);
+        }
 	}
 	
 }

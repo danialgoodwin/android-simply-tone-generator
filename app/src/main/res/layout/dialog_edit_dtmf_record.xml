@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <EditText
+        style="@style/DtmfRecordInputStyle"
+        android:id="@+id/dtmfRecordTitleInput"
+        android:inputType="textCapWords"
+        android:hint="@string/dtmf_input_title_label" />
+
+    <EditText
+        style="@style/DtmfRecordInputStyle"
+        android:id="@+id/dtmfRecordToneInput"
+        android:hint="@string/dtmf_input_tone_label" />
+
+</LinearLayout>

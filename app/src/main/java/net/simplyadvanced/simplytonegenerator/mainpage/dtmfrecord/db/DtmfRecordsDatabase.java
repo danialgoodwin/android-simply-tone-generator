@@ -54,23 +54,32 @@ public class DtmfRecordsDatabase extends SQLiteOpenHelper {
         onCreate(db);
 	}
 
-	public DtmfRecord createRecord(String title, String tone) {
+    /** Creates and inserts a new DtmfRecord into the database.
+     * @return the DtmfRecord that was added, including the database ID */
+	public DtmfRecord insertRecord(String title, String tone) {
         SQLiteDatabase db = getWritableDatabase();
-        
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_TITLE, title);
-        values.put(COLUMN_TONE, tone);
-        
-        long insertId = db.insert(TABLE_DTMF_RECORDS, null, values);
+        long insertId = db.insert(TABLE_DTMF_RECORDS, null, createContentValues(title, tone));
         
         Cursor cursor = db.query(TABLE_DTMF_RECORDS, ALL_COLUMNS,
         		COLUMN_ID + " = " + insertId, null, null, null, null);
         cursor.moveToFirst();
         DtmfRecord newRecord = getDtmfRecord(cursor);
         cursor.close();
+        db.close();
         return newRecord;
 	}
-	
+
+    /** Update the DtmfRecord in the database with the matching id in the provided record.
+     * @param record DtmfRecord with a a valid id
+     */
+    public void updateRecord(DtmfRecord record) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.update(TABLE_DTMF_RECORDS,
+                createContentValues(record), COLUMN_ID + " = " + record.getId(), null);
+        db.close();
+    }
+
+    /** Returns a list of all records stored in the database, may be empty, but not null. */
 	public List<DtmfRecord> getAllRecords() {
         List<DtmfRecord> records = new ArrayList<DtmfRecord>();
 
@@ -89,14 +98,31 @@ public class DtmfRecordsDatabase extends SQLiteOpenHelper {
 	
 	public void deleteRecord(DtmfRecord record) {
         long id = record.getId();
-        getWritableDatabase().delete(TABLE_DTMF_RECORDS, COLUMN_ID + " = " + id, null);
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(TABLE_DTMF_RECORDS, COLUMN_ID + " = " + id, null);
+        db.close();
 	}
-	
+
+    /** Retrieves the DtmfRecord at the current cursor position. There will be an error if the
+     * cursor is not valid. */
 	private DtmfRecord getDtmfRecord(Cursor cursor) {
 		long id = cursor.getLong(INDEX_OF_ID);
 		String title = cursor.getString(INDEX_OF_TITLE);
 		String tone = cursor.getString(INDEX_OF_TONE);
         return new DtmfRecord(id, title, tone);
 	}
-	
+
+    /** Returns a new ContentValues including just the title and tone. */
+    private static ContentValues createContentValues(DtmfRecord record) {
+        return createContentValues(record.getTitle(), record.getTone());
+    }
+
+    /** Returns a new ContentValues including just the title and tone. */
+    private static ContentValues createContentValues(String title, String tone) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_TITLE, title);
+        values.put(COLUMN_TONE, tone);
+        return values;
+    }
+
 }

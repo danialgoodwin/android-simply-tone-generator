@@ -1,5 +1,7 @@
 package net.simplyadvanced.simplytonegenerator;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -24,17 +26,20 @@ public class HelperCommon {
 
 
 	public static final String RECENT_UPDATES_PROMPT_TITLE = "Recent Updates - v" + AppVersion.getName();
-	public static final String RECENT_UPDATES_PROMPT_MESSAGE =
-			"" +
-			"Version 1.5b\n" +
-			"==========\n" +
-			"- Ability to record unlimited tones!\n" +
-			"- Ability to create titles for saved tones!\n" +
-			"\n" +
-			"Changes still to come\n" +
-			"- Ability to edit records after saved\n" +
-			"- More thanks for beta testers!\n" +
-			"\n" +
+	public static final String RECENT_UPDATES_PROMPT_MESSAGE = "" +
+			"Version 1.6\n" +
+			"=========\n" +
+			"- New Feature: Ability to record unlimited tones!\n" +
+			"- New Feature: Ability to create titles for saved tones!\n" +
+			"- New Feature: Ability to edit saved records\n" +
+            "- Fix: Backspace button is now easier to see\n" +
+            "\n" +
+            "Next planned update:\n" +
+            "- Integration with contacts\n" +
+            "\n" +
+            "If you find this free app useful, then please consider donating for the time and effort put in to create this app. Thank you.\n" +
+            "\n" +
+            "\n" +
 			"\n" +
 			"Version 1.4\n" +
 			"=========\n" +
@@ -93,7 +98,7 @@ public class HelperCommon {
     		"Directions\n" +
 	        "=========\n" +
 	        "- Play a tone, any tone.\n" +
-	        "- Record up to 4 DTMF tones.\n" +
+	        "- Record unlimited DTMF tones from the DTMF page. Just press RECORD.\n" +
 		    "\n" +
 		    "\n" +
 		    "Key Terms\n" +
@@ -268,5 +273,12 @@ public class HelperCommon {
 				.setMessage(RECENT_UPDATES_PROMPT_MESSAGE)
 				.setPositiveButton(android.R.string.ok, null).show();
 	}
-    
+
+    /** Opens a page where users can donate. Currently, the page is website via an Intent. */
+    public static void openDonatePage(Activity activity) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("http://danialgoodwin.com/app/simplytonegenerator/donate/"));
+        activity.startActivity(intent);
+    }
+
 }

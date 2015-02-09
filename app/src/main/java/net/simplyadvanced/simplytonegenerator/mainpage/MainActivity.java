@@ -242,12 +242,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             case R.id.menu_settings:
                 startActivity(new Intent(this, PrefActivity.class));
                 return true;
+            case R.id.menu_donate:
+                HelperCommon.openDonatePage(this);
+                return true;
             case R.id.menu_help:
                 mHelperCommon.showMenuHelpPrompt(this);
                 return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
+        return super.onOptionsItemSelected(item);
 	}
 
 	private static Intent getDefaultShareIntent() {

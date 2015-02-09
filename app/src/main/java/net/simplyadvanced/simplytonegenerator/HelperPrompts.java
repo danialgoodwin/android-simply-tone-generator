@@ -1,5 +1,6 @@
 package net.simplyadvanced.simplytonegenerator;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,33 +20,29 @@ public class HelperPrompts {
     public static final String ABOUT_TITLE = "About - v" + AppVersion.getName();
     public static final String ABOUT_MESSAGE = "\"The function of good software is to make the complex appear to be simple.\" - Grady Booch\n\n" +
             "Developer's message:\nHi, my name is Danial Goodwin. I hope you are enjoying this app. This started off as just a weekend side-project, but is growing much more than I expected. " +
-            "If you find this app useful, then please consider contributing to support my development costs. Any amount contributed would mean a lot to me. Thank you.\n\n" +
-            "If you have any suggestions, comments, or questions, then please feel free to email me.\n";
+            "If you find this app useful, then please consider contributing to support my development time and costs. Any amount contributed would mean a lot to me. Thank you.\n\n" +
+            "If you have any questions, comments, or suggestions, then please feel free to email me anytime.\n";
 
 
 
     /** No need to instantiate this class. */
 	private HelperPrompts() {}
 
-	/** Displays an AlertDialog showing the About popup.
-	 * @param context Must be an Activity Context to work. */
-	public static void showPromptAbout(final Context context) {
-		new AlertDialog.Builder(context)
+	/** Displays an AlertDialog showing the About popup. */
+	public static void showPromptAbout(final Activity activity) {
+		new AlertDialog.Builder(activity)
 				.setTitle(ABOUT_TITLE)
 				.setMessage(ABOUT_MESSAGE)
-				.setPositiveButton(context.getString(R.string.about_prompt_donate_label), new OnClickListener() {
+				.setPositiveButton(activity.getString(R.string.about_prompt_donate_label), new OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						// NOTE: open a new WebView page instead? It could look better
-		            	Intent i = new Intent(Intent.ACTION_VIEW);
-		            	i.setData(Uri.parse("http://danialgoodwin.com/app/simplytonegenerator/donate/"));
-		            	context.startActivity(i);
+                        HelperCommon.openDonatePage(activity);
 					}
 				})
-				.setNeutralButton(context.getString(R.string.about_prompt_feedback_label), new OnClickListener() {
+				.setNeutralButton(activity.getString(R.string.about_prompt_feedback_label), new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        HelperCommon.getInstance(context).sendEmail(context, ABOUT_TITLE);
+                        HelperCommon.getInstance(activity).sendEmail(activity, ABOUT_TITLE);
                     }
                 })
 				.setNegativeButton(android.R.string.cancel, null)

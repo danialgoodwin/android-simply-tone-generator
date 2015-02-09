@@ -4,12 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:animateLayoutChanges="true" >
-
     <!-- style="?android:buttonBarStyle" -->
     <!-- style="?android:borderlessButtonStyle" -->
-
     <!-- android:digits="0123456789ABCD*#" -->
-
 
     <LinearLayout
         android:layout_width="match_parent"

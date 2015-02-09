@@ -8,8 +8,8 @@ android {
         applicationId "net.simplyadvanced.simplytonegenerator"
         minSdkVersion 15
         targetSdkVersion 21
-        versionCode 11
-        versionName "1.5b"
+        versionCode 12
+        versionName "1.6"
     }
     buildTypes {
         release {

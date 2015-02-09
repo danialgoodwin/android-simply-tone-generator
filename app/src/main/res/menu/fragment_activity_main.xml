@@ -8,21 +8,26 @@
     <item
         android:id="@+id/menu_settings"
         android:showAsAction="never"
-        android:title="@string/menu_action_settings"/>
+        android:title="@string/menu_action_settings" />
     
     <item
         android:id="@+id/menu_rate_app"
         android:showAsAction="never"
-        android:title="@string/menu_action_rate_app"/>
-    
+        android:title="@string/menu_action_rate_app" />
+
     <item
         android:id="@+id/menu_about"
         android:showAsAction="never"
-        android:title="@string/menu_action_about"/>
+        android:title="@string/menu_action_about" />
+
+    <item
+        android:id="@+id/menu_donate"
+        android:showAsAction="never"
+        android:title="@string/menu_action_donate" />
     
     <item
         android:id="@+id/menu_help"
         android:showAsAction="never"
-        android:title="@string/menu_action_help"/>
+        android:title="@string/menu_action_help" />
 
 </menu>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="net.simplyadvanced.simplytonegenerator" >
+    xmlns:tools="http://schemas.android.com/tools"
+    package="net.simplyadvanced.simplytonegenerator" >
 
     <application
         android:name=".App"
@@ -22,12 +22,21 @@
         </activity>
         <activity
             android:name=".settings.PrefActivity"
-            android:label="@string/settings_activity_title"
+            android:label="@string/activity_settings_title"
             android:parentActivityName=".mainpage.MainActivity"
-            tools:ignore="UnusedAttribute">
+            tools:ignore="UnusedAttribute" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="net.simplyadvanced.simplytonegenerator.mainpage.MainActivity" />
+        </activity>
+        <activity
+            android:name=".mainpage.dtmfrecord.EditDtmfRecordActivity"
+            android:label="@string/activity_edit_dtmf_record_title" >
+            <!--Prevent "Up" button from appearing in action bar-->
+            <!--android:parentActivityName=".mainpage.MainActivity"-->
+            <!--<meta-data-->
+                <!--android:name="android.support.PARENT_ACTIVITY"-->
+                <!--android:value="net.simplyadvanced.simplytonegenerator.mainpage.MainActivity" />-->
         </activity>
     </application>
 

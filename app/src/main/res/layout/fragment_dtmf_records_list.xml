@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
@@ -10,21 +11,25 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
+        <!--TODO: This will be a future feature-->
         <Button
             android:id="@+id/addFromContactsButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/add_contact"
-            android:textSize="@dimen/dtmfRecordButtonTextSize" />
+            android:textSize="@dimen/dtmfRecordButtonTextSize"
+            android:visibility="gone" />
 
+        <!--TODO: This will be a future feature-->
         <Button
             android:id="@+id/dialFromContactsButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/call_contact"
-            android:textSize="@dimen/dtmfRecordButtonTextSize" />
+            android:textSize="@dimen/dtmfRecordButtonTextSize"
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -33,5 +38,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/emptyList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/empty_dtmf_records_list_help"/>
 
 </LinearLayout>

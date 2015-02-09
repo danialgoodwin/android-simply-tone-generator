@@ -34,7 +34,7 @@ public class DtmfRecordsUpdateHelper {
 	private static void move(String key) {
 		if (settings.contains(key)) {
 			String value = settings.getString(key, SAMPLE_TONE);
-			mRecordsDatabase.createRecord(value, value);
+			mRecordsDatabase.insertRecord(value, value);
 			settings.edit().remove(key).apply();
 		}
 	}
