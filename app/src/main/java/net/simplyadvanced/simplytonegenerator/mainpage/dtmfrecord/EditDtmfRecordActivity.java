@@ -1,5 +1,6 @@
 package net.simplyadvanced.simplytonegenerator.mainpage.dtmfrecord;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,16 @@ import net.simplyadvanced.simplytonegenerator.mainpage.dtmfrecord.db.model.DtmfR
  * Use `EditDtmfRecordActivity.navigate(...)` to open this page.
  * This file also handles the animations of opening and closing this Activity. */
 public class EditDtmfRecordActivity extends FragmentActivity {
+    private static final String LOGCAT_TAG = "DEBUG: EditDtmfRecordActivity";
+    @SuppressWarnings("UnusedDeclaration")
+    @SuppressLint("LongLogTag")
+    private static void log(String message) {
+        Log.d(LOGCAT_TAG, message);
+    }
+    @SuppressLint("LongLogTag")
+    private static void loge(String message) {
+        Log.d(LOGCAT_TAG, message);
+    }
 
     /** Navigate to this page. This handles the animations.
      * @param record DtmfRecord that must hold a valid ID in order to successfully navigate to this page
@@ -44,12 +55,11 @@ public class EditDtmfRecordActivity extends FragmentActivity {
                             .add(R.id.container, FragmentDtmf.newInstance(new DtmfRecord(id, title, tone)))
                             .commit();
                 } else {
-                    Log.e("ERROR: EditDtmfRecordActivity", "No valid DtmfRecord id.");
+                    loge("No valid DtmfRecord id.");
                     finish();
                 }
             } else {
-                Log.e("ERROR: EditDtmfRecordActivity", "Navigating to this Activity requires " +
-                        "DtmfRecord to be passed in Intent.");
+                loge("Navigating to this Activity requires DtmfRecord to be passed in Intent.");
                 finish();
             }
         }
@@ -66,4 +76,5 @@ public class EditDtmfRecordActivity extends FragmentActivity {
         super.finish();
         overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_bottom);
     }
+
 }

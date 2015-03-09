@@ -27,6 +27,16 @@ public class HelperCommon {
 
 	public static final String RECENT_UPDATES_PROMPT_TITLE = "Recent Updates - v" + AppVersion.getName();
 	public static final String RECENT_UPDATES_PROMPT_MESSAGE = "" +
+//            "Version 1.4\n" +
+//            "=========\n" +
+//            "\n" +
+//            "\n" +
+//            "\n" +
+            "Version 1.7\n" +
+            "=========\n" +
+            "- New feature: Ability to import entries from contacts list!\n" +
+            "\n" +
+            "\n" +
 			"Version 1.6\n" +
 			"=========\n" +
 			"- New Feature: Ability to record unlimited tones!\n" +

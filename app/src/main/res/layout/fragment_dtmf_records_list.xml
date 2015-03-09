@@ -11,17 +11,15 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
-        <!--TODO: This will be a future feature-->
         <Button
             android:id="@+id/addFromContactsButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/add_contact"
-            android:textSize="@dimen/dtmfRecordButtonTextSize"
-            android:visibility="gone" />
+            android:textSize="@dimen/dtmfRecordButtonTextSize" />
 
-        <!--TODO: This will be a future feature-->
+        <!-- TODO: Eventually implement. -->
         <Button
             android:id="@+id/dialFromContactsButton"
             android:layout_width="0dp"

@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="net.simplyadvanced.simplytonegenerator" >
 
+    <!-- Required to get info from contacts app. -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:name=".App"
         android:allowBackup="true"

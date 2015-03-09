@@ -13,7 +13,7 @@ public class AppConfig {
      * hidden. */
     @SuppressWarnings("SameReturnValue")
     public static boolean isShowDebugLogcat() {
-        return false;
+        return true;
     }
 
 }

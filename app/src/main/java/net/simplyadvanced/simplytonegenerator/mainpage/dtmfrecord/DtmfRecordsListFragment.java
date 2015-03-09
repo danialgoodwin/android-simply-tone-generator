@@ -8,9 +8,15 @@ import net.simplyadvanced.simplytonegenerator.mainpage.dtmf.DtmfUtilsHelper;
 import net.simplyadvanced.simplytonegenerator.mainpage.dtmfrecord.db.DtmfRecordsDatabase;
 import net.simplyadvanced.simplytonegenerator.mainpage.dtmfrecord.db.model.DtmfRecord;
 import net.simplyadvanced.simplytonegenerator.ui.CustomToast;
+import net.simplyadvanced.util.UserContactsUtils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -28,15 +35,18 @@ import android.widget.TextView;
 public class DtmfRecordsListFragment extends Fragment {
 	private static final String LOG_TAG = "DEBUG: DtmfRecordsListFragment";
 	private static final boolean IS_SHOW_DEBUG_LOGCAT = true;
-	private static void log(String message) {
+	@SuppressLint("LongLogTag")
+    private static void log(String message) {
         //noinspection PointlessBooleanExpression,ConstantConditions
         if (IS_SHOW_DEBUG_LOGCAT && AppConfig.isShowDebugLogcat()) {
 			Log.d(LOG_TAG, message);
 		}
 	}
 	
-	
-	
+
+    private static final int REQUEST_CODE_ADD_CONTACT = 1000; // Arbitrary unique number.
+    private static final int REQUEST_CODE_DIAL_CONTACT = 1001; // Arbitrary unique number.
+
 	private Activity mActivity;
 //    private LinearLayout mRootView; // Originally was going to be used for custom keyboard.
     private ListView mRecordsListView;
@@ -50,7 +60,9 @@ public class DtmfRecordsListFragment extends Fragment {
     public DtmfRecordsListFragment() {
         log("DtmfRecordsListFragment()");
     }
-	
+
+
+
 	// Called by FragmentDtmf.
 	/** TODO: This is bad and need to access it a better way, like using the
 	 * callback pattern. Also, when this is updated, remove static modifier for 
@@ -93,16 +105,34 @@ public class DtmfRecordsListFragment extends Fragment {
         View mainView = inflater.inflate(R.layout.fragment_dtmf_records_list, container, false);
 //        mRootView = (LinearLayout) mainView.findViewById(R.id.root);
         mRecordsListView = (ListView) mainView.findViewById(R.id.recordsListView);
+        Button addFromContactsButton = (Button) mainView.findViewById(R.id.addFromContactsButton);
+        Button dialFromContactsButton = (Button) mainView.findViewById(R.id.dialFromContactsButton);
         TextView emptyListViewView = (TextView) mainView.findViewById(R.id.emptyList);
 
         mRecordsListView.setEmptyView(emptyListViewView);
 
-        // TODOv2: Add functionality for these.
-//        Button addFromContactsButton = (Button) mainView.findViewById(R.id.addFromContactsButton);
-//        Button dialFromContactsButton = (Button) mainView.findViewById(R.id.dialFromContactsButton);
+        addFromContactsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickPhoneNumberFromUserContacts(REQUEST_CODE_ADD_CONTACT);
+            }
+        });
+        dialFromContactsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickPhoneNumberFromUserContacts(REQUEST_CODE_DIAL_CONTACT);
+            }
+        });
 		
 		return mainView;
 	}
+
+    /** Allow user to choose a contact from their list of contacts. This uses an Intent and
+     * returns the result in `onActivityResult()` with the provided request code. */
+    private void pickPhoneNumberFromUserContacts(int requestCode) {
+        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+        startActivityForResult(intent, requestCode);
+    }
 
     @Override
     public void onResume() {
@@ -117,10 +147,54 @@ public class DtmfRecordsListFragment extends Fragment {
 		mRecordsDatabase.close();
 		super.onDestroy();
 	}
-	
-	
-	
-	private void setupListView() {
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        log("onActivityResult(requestCode=" + requestCode + ",resultCode=" + resultCode + ")");
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_CODE_ADD_CONTACT: // fall-through
+            case REQUEST_CODE_DIAL_CONTACT:
+                if (resultCode == Activity.RESULT_OK) {
+                    if (data != null) {
+                        Uri uri = data.getData();
+                        if (uri != null) {
+                            Cursor cursor = getActivity().getContentResolver().query(uri,
+                                    new String[] {ContactsContract.Contacts._ID,
+                                            ContactsContract.Contacts.DISPLAY_NAME,
+                                            ContactsContract.Contacts.HAS_PHONE_NUMBER},
+                                    null, null, null);
+                            if (cursor != null && cursor.moveToNext()) {
+                                int contactId = cursor.getInt(0); // Number comes from projection above.
+                                String name = cursor.getString(1); // Number comes from projection above.
+                                boolean hasPhoneNumber = cursor.getInt(2) != 0; // Number comes from projection above.
+
+                                if (hasPhoneNumber) {
+                                    String phoneNumber = UserContactsUtils.getPhoneNumber(getActivity(), contactId);
+                                    if (phoneNumber != null) {
+                                        if (requestCode == REQUEST_CODE_DIAL_CONTACT) {
+                                            dialRecord(name, phoneNumber);
+                                        } else {
+                                            addRecord(name, phoneNumber);
+                                        }
+                                    } else {
+                                        CustomToast.show(getActivity(), "Error getting phone number");
+                                    }
+                                } else {
+                                    CustomToast.show(getActivity(), "No phone number available");
+                                }
+                                cursor.close();
+                            }
+                        }
+                    }
+                } else {
+                    CustomToast.show(getActivity(), "Error getting phone number");
+                }
+                break;
+        }
+    }
+
+    private void setupListView() {
 		final List<DtmfRecord> values = mRecordsDatabase.getAllRecords();
 
         // TODOv2: Eventually, possibly use the View-Holder pattern for this.
@@ -154,6 +228,22 @@ public class DtmfRecordsListFragment extends Fragment {
 			}
 		});
 	}
+
+    /** Add a DTMF record to database and list view and show Toast for success. */
+    public void addRecord(String name, String dtmfSequence) {
+        log("addRecord(name=" + name + ",dtmfSequence=" + dtmfSequence + ")");
+        CustomToast.show(getActivity(), "Added record");
+        DtmfRecord dtmfRecord = mRecordsDatabase.insertRecord(name, dtmfSequence);
+        updateListView(dtmfRecord);
+    }
+
+    /** TODO: Make this dial sequence out loud, and possibly through device after that. Then, again
+     * maybe don't need this feature. Just make users add contacts first before calling. */
+    public void dialRecord(String name, String dtmfSequence) {
+        log("dialRecord(name=" + name + ",dtmfSequence=" + dtmfSequence + ")");
+//        CustomToast.show(getActivity(), "Dialing " + name + " with number="+dtmfSequence+"...");
+        throw new RuntimeException("Method not implemented yet");
+    }
 
     /** Show a small menu at the view that allows user to choose between "Edit" and "Delete". */
     public void showPopupMenu(Activity activity, View view, final int position) {
