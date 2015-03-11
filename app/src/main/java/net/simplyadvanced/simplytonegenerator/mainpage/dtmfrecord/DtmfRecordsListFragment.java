@@ -238,7 +238,8 @@ public class DtmfRecordsListFragment extends Fragment {
     }
 
     /** TODO: Make this dial sequence out loud, and possibly through device after that. Then, again
-     * maybe don't need this feature. Just make users add contacts first before calling. */
+     * maybe don't need this feature. Just make users add contacts first before calling. So,
+     * don't add unless multiple people request it and really need it. */
     public void dialRecord(String name, String dtmfSequence) {
         log("dialRecord(name=" + name + ",dtmfSequence=" + dtmfSequence + ")");
 //        CustomToast.show(getActivity(), "Dialing " + name + " with number="+dtmfSequence+"...");

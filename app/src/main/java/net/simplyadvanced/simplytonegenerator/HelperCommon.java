@@ -191,7 +191,7 @@ public class HelperCommon {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						launchAppInGooglePlay(context);
 					}
-				}).setNegativeButton("Later", null).show();
+				}).setNegativeButton("Not now", null).show();
 	}
 	
 	
@@ -287,7 +287,7 @@ public class HelperCommon {
     /** Opens a page where users can donate. Currently, the page is website via an Intent. */
     public static void openDonatePage(Activity activity) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("http://danialgoodwin.com/app/simplytonegenerator/donate/"));
+        intent.setData(Uri.parse("http://danialgoodwin.com/app/simplydtmf/donate/"));
         activity.startActivity(intent);
     }
 
