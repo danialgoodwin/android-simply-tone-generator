@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import net.simplyadvanced.simplytonegenerator.ActivityCommon;
 import net.simplyadvanced.simplytonegenerator.R;
 import net.simplyadvanced.simplytonegenerator.mainpage.dtmf.FragmentDtmf;
 import net.simplyadvanced.simplytonegenerator.mainpage.dtmfrecord.db.model.DtmfRecord;
@@ -42,6 +43,7 @@ public class EditDtmfRecordActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_dtmf_record);
+        ActivityCommon.onCreate(this);
 
         if (savedInstanceState == null) {
             Intent intent = getIntent();
@@ -63,6 +65,12 @@ public class EditDtmfRecordActivity extends FragmentActivity {
                 finish();
             }
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ActivityCommon.onStart(this);
     }
 
     @Override

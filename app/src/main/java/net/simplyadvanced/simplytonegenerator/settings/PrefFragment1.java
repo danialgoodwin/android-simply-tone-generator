@@ -2,6 +2,7 @@ package net.simplyadvanced.simplytonegenerator.settings;
 
 import net.simplyadvanced.simplytonegenerator.R;
 import net.simplyadvanced.util.OrientationHelper;
+import net.simplyadvanced.util.OrientationUtils;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
@@ -36,6 +37,18 @@ public class PrefFragment1 extends PreferenceFragment implements OnSharedPrefere
 		setupSummaries();
 	}
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+        super.onPause();
+    }
+
 	private void setupSummaries() {
 		int tempInt;
 		
@@ -55,12 +68,7 @@ public class PrefFragment1 extends PreferenceFragment implements OnSharedPrefere
     @Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		if (sharedPreferences == null || TextUtils.isEmpty(key)) { return; }
-		
-//		if (key.equals(KEY_PREF_EDIT_WAIT_TIME)) {
-//            Preference connectionPref = findPreference(key);
-//            int tempKey = Integer.parseInt(sharedPreferences.getString(key, "1"));
-//            connectionPref.setSummary("" + pref_editWaitTimeText[tempKey] + " between cycles"); // Set summary to be the user-description for the selected value
-//        }
+
 		if (key.equalsIgnoreCase(getString(R.string.pref_time_for_tone))) {
     		String timeString = sharedPreferences.getString(key, TAG_DEFAULT_TIME_FOR_TONE);
         	int timeForTone = validTimeLength(timeString);
@@ -78,25 +86,11 @@ public class PrefFragment1 extends PreferenceFragment implements OnSharedPrefere
 			findPreference(key).setSummary(timeForPause + " milliseconds");
 		} else if (key.equalsIgnoreCase(getString(R.string.pref_lock_in_portrait_orientation))) {
 			OrientationHelper.setOrientationMode(getActivity());
+		} else if (key.equals(getString(R.string.pref_is_keep_screen_on))) {
+            OrientationUtils.keepScreenOn(getActivity(), sharedPreferences.getBoolean(key, false));
 		}
 	}
-	
-	
-	
-	@Override
-	public void onResume() {
-		super.onResume();
-	    getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-	}
-	
-	@Override
-	public void onPause() {
-	    getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
-	    super.onPause();
-	}
-	
-	
-	
+
 	/** Returns a valid time length for play or pause. */
 	private static int validTimeLength(String timeString) {
 		if (TextUtils.isEmpty(timeString)) { return 0; }

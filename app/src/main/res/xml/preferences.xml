@@ -11,11 +11,15 @@
         android:defaultValue="false"
         android:key="@string/pref_show_letters_with_dtmf_numbers"
         android:title="Letters with DTMF numbers" />
-        
+
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="@string/pref_lock_in_portrait_orientation"
         android:title="Lock orientation portrait" />
+
+    <CheckBoxPreference
+        android:key="@string/pref_is_keep_screen_on"
+        android:title="Keep screen on" />
 
     <PreferenceCategory android:title="DTMF Playback" >
         

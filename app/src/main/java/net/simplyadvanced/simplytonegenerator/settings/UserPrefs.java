@@ -45,11 +45,16 @@ public class UserPrefs extends AbstractPrefs {
 	public boolean isShowLettersUnderDtmfNumbers() {
 		return get(mAppContext.getString(R.string.pref_show_letters_with_dtmf_numbers), false);
 	}
-	
-	/** Returns true if window orientation should be locked in portrait mode,
+
+	/** Return true if window orientation should be locked in portrait mode,
 	 * otherwise false. */
 	public boolean isLockOrientationPortrait() {
 		return get(mAppContext.getString(R.string.pref_lock_in_portrait_orientation), false);
+	}
+
+	/** Return true if screen should be kept on, otherwise false. */
+	public boolean isKeepScreenOn() {
+		return get(mAppContext.getString(R.string.pref_is_keep_screen_on), false);
 	}
 
 	/** Returns the length of time that the DTMF tone should sound for. */

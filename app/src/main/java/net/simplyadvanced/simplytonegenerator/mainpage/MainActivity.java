@@ -2,6 +2,7 @@ package net.simplyadvanced.simplytonegenerator.mainpage;
 
 import java.util.Locale;
 
+import net.simplyadvanced.simplytonegenerator.ActivityCommon;
 import net.simplyadvanced.simplytonegenerator.AppConfig;
 import net.simplyadvanced.simplytonegenerator.HelperCommon;
 import net.simplyadvanced.simplytonegenerator.HelperPrefs;
@@ -12,7 +13,6 @@ import net.simplyadvanced.simplytonegenerator.mainpage.dtmfrecord.DtmfRecordsLis
 import net.simplyadvanced.simplytonegenerator.mainpage.tone.FragmentTone;
 import net.simplyadvanced.simplytonegenerator.settings.PrefActivity;
 import net.simplyadvanced.simplytonegenerator.ui.CustomToast;
-import net.simplyadvanced.util.OrientationHelper;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
@@ -55,8 +55,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         // Make sure ActionBar is available. Goes before `setContextView()`.
 	    getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.fragment_activity_main);
-
-		OrientationHelper.setOrientationMode(this);
+        ActivityCommon.onCreate(this);
 		
 	 	mHelperCommon = HelperCommon.getInstance(this);
     	mHelperPrefs = HelperPrefs.getInstance(this);
@@ -66,9 +65,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	}
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        OrientationHelper.setOrientationMode(MainActivity.this);
+    protected void onStart() {
+        super.onStart();
+        ActivityCommon.onStart(this);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package net.simplyadvanced.simplytonegenerator.settings;
 
+import net.simplyadvanced.simplytonegenerator.ActivityCommon;
 import net.simplyadvanced.simplytonegenerator.R;
 import net.simplyadvanced.util.OrientationHelper;
 import android.app.Activity;
@@ -22,14 +23,14 @@ public class PrefActivity extends Activity {
 		fragmentTransaction.replace(android.R.id.content, prefFragment1);
 //		fragmentTransaction.addToBackStack(null); // Allows user to press back button to dismiss fragment.
 		fragmentTransaction.commit();
-		
-		OrientationHelper.setOrientationMode(PrefActivity.this);
+
+        ActivityCommon.onCreate(this);
 	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		OrientationHelper.setOrientationMode(PrefActivity.this);
-	}
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ActivityCommon.onStart(this);
+    }
 	
 }
