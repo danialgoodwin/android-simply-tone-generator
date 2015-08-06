@@ -1,6 +1,5 @@
 package net.simplyadvanced.simplytonegenerator;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 public class HelperCommon {
 	private static final String LOG_TAG = "DEBUG: HelperCommon";
 	private static final boolean IS_SHOW_DEBUG_LOGCAT = true;
+	@SuppressWarnings("unused")
 	private static void log(String message) {
         //noinspection PointlessBooleanExpression,ConstantConditions
         if (IS_SHOW_DEBUG_LOGCAT && AppConfig.isShowDebugLogcat()) {
@@ -147,7 +147,7 @@ public class HelperCommon {
 		    "A: By default, recorded playback transmits signaling rate of 93 ms per tone with 40 ms between tones. Each pause is 1 second.\n" + /* And, basic clicks on DTMF tones are 537 ms.*/
 		    "\n" +
 		    "Q: How to make a call with DTMF?\n" +
-		    "A: First create a DTMF record, then long-click the record from the Records page to call.\n" +
+		    "A: First create a DTMF record, then long-click the record from the Records page to call. Tones (and pauses) after a comma will be sent through the call.\n" +
 		    "\n" +
 		    "Q: Q: What does DTMF stand for?\n" +
 		    "A: Dual-tone multi-frequency signaling.\n" +
