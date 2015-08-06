@@ -19,6 +19,7 @@
     <string name="menu_action_rate_app">Rate app</string>
     <string name="menu_action_share">Share</string>
     <string name="menu_action_settings">Settings</string>
+    <string name="menu_action_call">Call</string>
     <string name="menu_action_edit">Edit</string>
     <string name="menu_action_delete">Delete</string>
     <string name="prompt_button_feedback_label">Send feedback</string>

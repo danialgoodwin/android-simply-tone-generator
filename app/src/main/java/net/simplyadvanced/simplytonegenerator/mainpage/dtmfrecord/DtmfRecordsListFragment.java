@@ -215,18 +215,18 @@ public class DtmfRecordsListFragment extends Fragment {
 
         mRecordsListView.setAdapter(mAdapter);
         mRecordsListView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 playRecord(position);
-			}
-		});
+            }
+        });
         mRecordsListView.setOnItemLongClickListener(new OnItemLongClickListener() {
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 showPopupMenu(mActivity, view, position);
-				return true;
-			}
-		});
+                return true;
+            }
+        });
 	}
 
     /** Add a DTMF record to database and list view and show Toast for success. */
@@ -254,6 +254,9 @@ public class DtmfRecordsListFragment extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.menu_action_call:
+                        call(position);
+                        return true;
                     case R.id.menu_action_edit:
                         editRecord(position);
                         return true;
@@ -265,6 +268,12 @@ public class DtmfRecordsListFragment extends Fragment {
             }
         });
         popupMenu.show();
+    }
+
+    private void call(int position) {
+        DtmfRecord record = mAdapter.getItem(position);
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + record.getTone()));
+        mActivity.startActivity(intent);
     }
 
     /** Play the recorded DTMF tone at the position in the list/adapter. If there is already a
