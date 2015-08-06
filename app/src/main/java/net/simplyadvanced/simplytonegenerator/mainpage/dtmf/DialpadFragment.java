@@ -109,7 +109,6 @@ public class DialpadFragment extends Fragment implements View.OnClickListener,
     	
     	setupKeypad(fragmentView);
 
-    	
     	return fragmentView;
     }
     

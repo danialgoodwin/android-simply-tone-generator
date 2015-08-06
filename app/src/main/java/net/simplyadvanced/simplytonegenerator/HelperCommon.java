@@ -146,6 +146,9 @@ public class HelperCommon {
 		    "Q: What are all the pause and play times?\n" +
 		    "A: By default, recorded playback transmits signaling rate of 93 ms per tone with 40 ms between tones. Each pause is 1 second.\n" + /* And, basic clicks on DTMF tones are 537 ms.*/
 		    "\n" +
+		    "Q: How to make a call with DTMF?\n" +
+		    "A: First create a DTMF record, then long-click the record from the Records page to call.\n" +
+		    "\n" +
 		    "Q: Q: What does DTMF stand for?\n" +
 		    "A: Dual-tone multi-frequency signaling.\n" +
 		    "\n" +
