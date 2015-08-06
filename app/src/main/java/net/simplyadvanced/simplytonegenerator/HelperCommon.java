@@ -32,6 +32,11 @@ public class HelperCommon {
 //            "\n" +
 //            "\n" +
 //            "\n" +
+			"Version 1.9\n" + // Version code 17
+			"=========\n" +
+			"- New feature: Ability to call from Records page (long-click)\n" +
+			"\n" +
+			"\n" +
 			"Version 1.8\n" +
 			"=========\n" +
 			"- New setting: Ability to keep screen on\n" +
